@@ -53,7 +53,7 @@ for (int i = 0; i < R; i++)
     }
 ```
 
-and i call it like this
+I call it like this
 
 ```c
 print_csv(csv, R, C);
