@@ -59,7 +59,7 @@ I call it like this
 print_csv(csv, R, C);
 ```
 
-where `csv` is a 2d `char` pointer array.
+where `csv` is a 2d `char*` array.
 
 Here is the error
 
