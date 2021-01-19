@@ -52,8 +52,9 @@ int main(int argc, char **argv)
             i++;
         }
     }
-
     fclose(f);
+
+    // print_csv(csv, R, C);
 
     for (int i = 0; i < R; i++)
     {
@@ -107,7 +108,8 @@ int n_col(char *filename)
 }
 
 // void print_csv(char **csv, int R, int C)
-// for (int i = 0; i < R; i++)
+// {
+//     for (int i = 0; i < R; i++)
 //     {
 //         for (int j = 0; j < C; j++)
 //         {
@@ -119,3 +121,4 @@ int n_col(char *filename)
 //             }
 //         }
 //     }
+// }
