@@ -64,11 +64,11 @@ where `csv` is a 2d `char` pointer array.
 Here is the error
 
 ```sh
-~/JCC/csv_praser(master*) » make main &&./main test.csv                                                                                                                      139 ↵ macone@Macs-MBP
+~/JCC/csv_praser(master*) » make main &&./main test.csv                                                                                                                            macone@Macs-MBP
 cc     main.c   -o main
-main.c:57:15: warning: incompatible pointer types passing 'char *(*)[R][C]' to parameter of type 'char **' [-Wincompatible-pointer-types]
-    print_csv(&csv, R, C);
-              ^~~~
+main.c:57:15: warning: incompatible pointer types passing 'char *[R][C]' to parameter of type 'char **' [-Wincompatible-pointer-types]
+    print_csv(csv, R, C);
+              ^~~
 main.c:6:23: note: passing argument to parameter 'csv' here
 void print_csv(char **csv, int R, int C);
                       ^
@@ -77,5 +77,5 @@ main.c:117:27: warning: format specifies type 'char *' but the argument has type
                     ~~    ^~~~~~~~~
                     %c
 2 warnings generated.
-[1]    25171 segmentation fault  ./main test.csv
+[1]    25830 segmentation fault  ./main test.csv
 ```

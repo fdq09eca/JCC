@@ -54,20 +54,20 @@ int main(int argc, char **argv)
     }
     fclose(f);
 
-    // print_csv(csv, R, C);
+    print_csv(csv, R, C);
 
-    for (int i = 0; i < R; i++)
-    {
-        for (int j = 0; j < C; j++)
-        {
-            // printf("<%i><%i> %s\n", i, j, csv[i][j]);
-            printf("%s ", csv[i][j]);
-            if (j == C - 1)
-            {
-                printf("\n");
-            }
-        }
-    }
+    // for (int i = 0; i < R; i++)
+    // {
+    //     for (int j = 0; j < C; j++)
+    //     {
+    //         // printf("<%i><%i> %s\n", i, j, csv[i][j]);
+    //         printf("%s ", csv[i][j]);
+    //         if (j == C - 1)
+    //         {
+    //             printf("\n");
+    //         }
+    //     }
+    // }
 
     return 0;
 }
@@ -107,18 +107,18 @@ int n_col(char *filename)
     return c;
 }
 
-// void print_csv(char **csv, int R, int C)
-// {
-//     for (int i = 0; i < R; i++)
-//     {
-//         for (int j = 0; j < C; j++)
-//         {
-//             // printf("<%i><%i> %s\n", i, j, csv[i][j]);
-//             printf("%s ", csv[i][j]);
-//             if (j == C - 1)
-//             {
-//                 printf("\n");
-//             }
-//         }
-//     }
-// }
+void print_csv(char **csv, int R, int C)
+{
+    for (int i = 0; i < R; i++)
+    {
+        for (int j = 0; j < C; j++)
+        {
+            // printf("<%i><%i> %s\n", i, j, csv[i][j]);
+            printf("%s ", csv[i][j]);
+            if (j == C - 1)
+            {
+                printf("\n");
+            }
+        }
+    }
+}
