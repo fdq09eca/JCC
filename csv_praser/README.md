@@ -19,7 +19,7 @@
 ## Question
 
 1. How to use `fread`/`fwrite` for byte by byte file reading/writing?
-2. How to put the following in to a function and call it in the main?
+2. How to put the following in to a function and call it in the `main`?
 
 ```c
 for (int i = 0; i < R; i++)
@@ -79,3 +79,9 @@ main.c:117:27: warning: format specifies type 'char *' but the argument has type
 2 warnings generated.
 [1]    25830 segmentation fault  ./main test.csv
 ```
+
+## Spec
+
+1. Follow the CSV spec, Comma, newline, any value..
+2. structure OOP
+3. Performance
