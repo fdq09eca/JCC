@@ -1,19 +1,22 @@
 # Note
 
 - 2d array formula = `rowIdx * numCol + colIdx`
+- `fread` **does not** return the read value, see [doc](https://en.cppreference.com/w/cpp/io/c/fread).
 - 2's complement char `1 byte`
 - unsigned char
 - POSIX
-- `size_t` << 32bit `%u` ; << 64bit `%ull`
+- `size_t` is `unsiged`, `printf` when it is 32bit: `%u`; 64bit: `%ull`
 - x86, x64
 
 ## ex
 
+The following ex follow [cppreference.com](https://en.cppreference.com/w/c/string/byte):
+
 - [x] str_int_parser
 - [x] int_str_convert
 - [x] my_strcpy
-- [x] strlen
 - [ ] my_strncpy
+- [x] strlen
 - [ ] my_strcat
 - [ ] my_strdup
 - [ ] my_strndup
@@ -31,7 +34,7 @@
 - [ ] memcpy
 - [ ] memmove
 
-[^1] "static buffer!!"
+[^1]: `static buffer`
 
 ## ref
 

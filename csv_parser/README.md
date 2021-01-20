@@ -1,4 +1,4 @@
-# CSV praser
+# CSV parser
 
 ## Quick start
 
