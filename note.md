@@ -10,15 +10,16 @@
 
 ## ex
 
-The following ex follow [cppreference.com](https://en.cppreference.com/w/c/string/byte):
-
 - [x] str_int_parser
 - [x] int_str_convert
-- [x] my_strcpy
-- [ ] my_strncpy
-- [x] strlen
-- [ ] my_strcat
-- [ ] my_strdup
+
+The following ex follow [cppreference.com](https://en.cppreference.com/w/c/string/byte):
+
+- [x] [my_strcpy](https://en.cppreference.com/w/c/string/byte/strcpy)
+- [x] [my_strncpy](https://en.cppreference.com/w/c/string/byte/strncpy)
+- [x] [strlen](https://en.cppreference.com/w/c/string/byte/strlen)
+- [x] [my_strcat](https://en.cppreference.com/w/c/string/byte/strcat)[^p1] -> [fbsd_strcat](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strcat.c)
+- [x] [my_strdup](https://en.cppreference.com/w/c/string/byte/strdup) ->  [freebsd_strdup](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strdup.c)
 - [ ] my_strndup
 - [ ] my_strcmp
 - [ ] my_strncmp
@@ -35,7 +36,7 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
 - [ ] memmove
 
 [^1]: `static buffer`
-
+[^p1]: Instead of doing the copy, i was thinking put the `char* src` at the `char* dest`'s null terminator position.. but seems it is worng, is it conceptual problem? 
 ## ref
 
 1. [freebsd](https://github.com/freebsd/freebsd-src/tree/master/lib/libc/string)
