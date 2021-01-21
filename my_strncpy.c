@@ -1,17 +1,21 @@
 #include <stdio.h>
 
-char *my_strncpy(char *dest, char *src, int n)
+char *my_strncpy(char *dest, char *src, size_t n)
 {
-
-    char *rtn = dest;
+    char *d = dest;
     while (n--)
     {
-        *dest = *src ? *src : 0;
-        dest++;
-        src++;
+        *dest++ = *src? *src++ : *src;
+        // if (*src)
+        // {
+        //     *dest++ = *src++;
+        // }
+        // else
+        // {
+        //     *dest++ = 0;
+        // }
     }
-
-    return rtn;
+    return d;
 }
 
 int main()
@@ -26,8 +30,8 @@ int main()
         c ? printf("'%c' ", c) : printf("'\\0' ");
     }
     printf("\nstrncpy(dest2, src, 2) to a 2-byte dst gives : ");
-    char dest2[2];
-    my_strncpy(dest2, src, 2); // truncation: writes two characters 'h', 'i', to dest2
+    char dest2[2] = {'?', '?'};
+    my_strncpy(dest2, src, 0); // truncation: writes two characters 'h', 'i', to dest2
     for (size_t n = 0; n < sizeof dest2; ++n)
     {
         char c = dest2[n];

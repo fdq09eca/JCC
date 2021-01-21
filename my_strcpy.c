@@ -1,25 +1,20 @@
 #include <stdio.h>
 
-char *my_strcpy(char *dest, char *src)
+char *my_strcpy(char *dest, const char *src)
 {
-    char *ret = dest;
-    while (*src)
-    {
-        *dest = *src;
-        src++;
-        dest++;
-    }
-    *(dest) = 0;
+    char *d = dest;
+    while ((*dest++ = *src++))
+        ;
 
-    return ret;
+    return d;
 }
 
-int main()
-{
-    char arr[10];
-    my_strcpy(arr, "hello");
-    printf("%s\n", arr);
-    return 0;
-}
+// int main()
+// {
+//     char arr[10];
+//     my_strcpy(arr, "hello");
+//     printf("%s\n", arr);
+//     return 0;
+// }
 
 // https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strcpy.c

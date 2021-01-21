@@ -1,4 +1,6 @@
 #include <stdio.h>
+
+char *my_strcpy(char *dest, const char *src);
 char *my_strcat(char *dest, const char *src);
 
 int main()
@@ -14,20 +16,11 @@ int main()
 
 char *my_strcat(char *dest, const char *src)
 {
-    char *rtn = dest;
-    while (*src)
+    char *d = dest;
+    for (; *d; d++)
     {
-        if (*dest)
-        {
-            dest++;
-        }
-        else
-        {
-            *dest = *src;
-            src++;
-        }
+        // dest null terminator found.
     }
-    dest = 0;
-
-    return rtn;
+    my_strcpy(d, src);
+    return dest;
 }
