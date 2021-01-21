@@ -23,24 +23,7 @@ int main(void)
 
 char *my_strstr(const char *str, const char *substr)
 {
-    // size_t l = 0;
-    // char* tmp = (char*) substr;
-    // for(; *tmp; tmp++, l++){
-    //     // get substr len
-    // }
-
-    // for (;*str; str++) {
-    //     char* s = (char*) str;
-    //     char* ss = (char*) substr;
-    //     char* end = s + l;
-    //     for (; s < end; s++, ss++) {
-    //         if (*s != *ss) break;
-    //     }
-    //     if (s == end) return (char*) str;
-    // }
-    // return NULL;
-
-    for (; *str; str++)
+   for (; *str; str++)
     {
         char *s = (char *)str;
         char *ss = (char *)substr;
