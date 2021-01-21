@@ -17,8 +17,8 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
 - [x] [my_strrchr](./my_strrchr.c): [cppref](https://en.cppreference.com/w/c/string/byte/strrchr), [freebsd_strrchr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strrchr.c)
 - [x] [my_strstr](./my_strstr.c): [cppref](https://en.cppreference.com/w/c/string/byte/strstr), [freebsd_strstr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strstr.c)
 - [x] [my_strrstr](./my_strrstr.c): noref.
-- [ ] **strcasestr**/ **stristr** (window)
-- [ ] **strcaseRstr**/ **striRstr** (window)
+- [x] [strcasestr/stristr (window)](./my_strcasestr.c): [freebsd_strcasestr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strcasestr.c)
+- [ ] **strcaserstr**/ **strirstr** (window)
 - [ ] strtok [^1]
 - [ ] memchr
 - [ ] memset
@@ -27,19 +27,22 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
 
 [^1]: `static buffer`
 [^p1]: Instead of doing the copy, I was thinking put the `char* src` at the `char* dest`'s null terminator position (as if linked list) but seems it is worng, why is it?
-[^a1]: because wrong type. `*dest` is `char` cannot be char pointer.
+[^a1]: Because wrong type. `*dest` is `char`, not `char *`.
 
-
-# Note
+## Note
 
 - 2d array formula = `rowIdx * numCol + colIdx`
 - `fread` **does not** return the read value, see [doc](https://en.cppreference.com/w/cpp/io/c/fread).
 - 1's complement, 2's complement
 - POSIX
+- calling convention
+  - `printf("%d %d %d\n", i++, i++, i++);`
+  - Mac: from left to right i.e. `2 1 0`
+  - Window: from right to left, i.e. `0 1 2`
 - Corss platform matters
   - `size_t` is `unsiged int type`
     - `printf` when it is 32bit (4 byte): `%u`; 64bit (8 byte): `%ull`
-    - see Jason's [youtube ref](https://www.youtube.com/watch?v=JiUfvzd4eQM)
+    - see Jason's [Youtube ref](https://www.youtube.com/watch?v=JiUfvzd4eQM)
   - `unsigned char`
 - x86, x64
 - `gcc`: GNU C Compiler
