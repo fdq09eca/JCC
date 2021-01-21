@@ -16,7 +16,7 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
 - [x] [my_strchr](./my_strchr.c): [cppref](https://en.cppreference.com/w/c/string/byte/strchr), [freebsd_strchr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strchr.c)
 - [x] [my_strrchr](./my_strrchr.c): [cppref](https://en.cppreference.com/w/c/string/byte/strrchr), [freebsd_strrchr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strrchr.c)
 - [x] [my_strstr](./my_strstr.c): [cppref](https://en.cppreference.com/w/c/string/byte/strstr), [freebsd_strstr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strstr.c)
-- [ ] **strrstr**
+- [x] [my_strrstr](./my_strrstr.c): noref.
 - [ ] **strcasestr**/ **stristr** (window)
 - [ ] **strcaseRstr**/ **striRstr** (window)
 - [ ] strtok [^1]
