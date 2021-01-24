@@ -3,9 +3,26 @@
 
 typedef struct
 {
+    char *data;
+    int cell_n;
+} CELL;
+
+typedef struct
+{
+    char* data;
+    int row_n;
+    CELL* cells[];
+} ROW;
+
+typedef struct
+{
     char *name;
-    char *content;
+    char *data;
+    int n_row;
+    int n_col;
+    ROW* rows[];
 } CSV;
+
 
 char *file_ext(const char *fn);
 int my_strcmp(const char *str1, const char *str2);
@@ -15,27 +32,68 @@ size_t file_size(FILE *f);
 char *read_csv(const char *fn);
 void init_csv(CSV *csv, char *fn);
 void close_csv(CSV *csv);
-
+char *parse_row(CSV *csv);
 
 int main()
 {
     CSV csv;
     init_csv(&csv, "test.csv");
     // char *csv_ptr = read_csv("test.csv");
-    puts(csv.content);
+    // puts(csv.data);
+
+    for (int i = 0;; i++)
+    {
+        char *r = parse_row(&csv);
+        if (!r)
+        {
+            break;
+        }
+        printf("row%i: %s\n", i, r);
+    }
+
+    // char* r; int i = 0;
+    // while ((r = parse_row(&csv))){
+    //     printf("row %d: %s\n", i, r);
+    //     i++;
+    // }
+    // printf("%s\n", parse_row(&csv));
+    // printf("%s\n", parse_row(&csv));
     close_csv(&csv);
     return 0;
 }
 
+
+char *parse_row(CSV *csv)
+{
+    static char *save = NULL;
+    static char buff[200];
+    char *b = buff;
+    char *c = save ? save : csv->data;
+    for (; *c; c++, b++)
+    {
+        *b = *c;
+        if (*c == '\n')
+        {
+            *b = 0;
+            save = c + 1;
+            return buff;
+        }
+    }
+    return NULL;
+}
+void init_row(ROW* row, char* data) {
+    
+}
+
 void init_csv(CSV *csv, char *fn)
 {
-    char *content = read_csv(fn);
-    if (!content)
+    char *data = read_csv(fn);
+    if (!data)
     {
-        puts("NULL content.");
+        puts("NULL data.");
     }
     csv->name = fn;
-    csv->content = content;
+    csv->data = data;
     return;
 }
 
@@ -97,9 +155,9 @@ int my_strcmp(const char *str1, const char *str2)
     return *(unsigned char *)str1 - *(unsigned char *)str2;
 }
 
-void close_csv(CSV* csv)
+void close_csv(CSV *csv)
 {
-    free(csv->content);
+    free(csv->data);
     puts("csv closed.\n");
     return;
 }
