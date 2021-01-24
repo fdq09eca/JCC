@@ -31,6 +31,7 @@
 [^win_strcasestr]: Window version: `strcasestr` = `stristr`
 [^restrict]: what does `restrict` mean?
 [^cpp]: The following ex follow [cppreference.com](https://en.cppreference.com/w/c/string/byte).
+
 ## Note
 
 - 2d array formula = `rowIdx * numCol + colIdx`
@@ -51,6 +52,7 @@
   - `gcc -o my_strcat my_strcat.c my_strcpy.c` compile 2 `.c` together, only 1 `main(){}`.
 - `while (*s++){}` is different from `while (*s) {s++;}`
 - `char[] str != char* str`, modify string literal results in undefine behaviour, see [here](https://en.cppreference.com/w/cpp/language/string_literal) and [here](https://stackoverflow.com/questions/10186765/what-is-the-difference-between-char-array-and-char-pointer-in-c).
+- null terminator concept: **do not** rely on str length.
 
 *DEBUG: print out the pointer, deref.*
 
@@ -77,4 +79,3 @@ cc     my_strrchr.c   -o my_strrchr
 s0: 0x7ffee3a5959d, 7: 0x7ffee3a5959d
 ```
 
-- null terminator concept: **do not** rely on str length.
