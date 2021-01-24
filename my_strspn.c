@@ -13,15 +13,13 @@ int main(void)
 
 size_t my_strspn( const char *dest, const char *src ){
     int c = 0;
-    
     for (char* d = (char*) dest; *d; d++) {
         for (char* s = (char*) src; *s; s++){
             if (*s == *d) {
-                spn_start = 1;
                 c++;
                 break;
             } 
-            if (spn_start && !*(s + 1)) {
+            if (c && !*(s + 1)) {
                 return c;
             }                        
         }
