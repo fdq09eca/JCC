@@ -6,11 +6,11 @@ int main()
 {
     char str0[] = "1234567890";
     char str__[] = "1234567890";
-    char x[] = {'A','B','C'};
-    
+    char x[] = {'A', 'B', 'C'};
+
     my_memmove(str__, x, 3); // copy from [A,B,C] to [1,2,3]
     printf("%s, copy from [A,B,C] to [1,2,3]: %s\n", str0, str__);
-    
+
     char str1[] = "1234567890";
     my_memmove(str1 + 3, str1 + 4, 3); // copy from [5,6,7] to [4,5,6]
     printf("%s, copy from [5,6,7] to [4,5,6]: %s\n", str0, str1);
@@ -28,7 +28,7 @@ int main()
     // char x[] = {'A','B','C'};
     // memmove(str__, x, 3); // copy from [A,B,C] to [1,2,3]
     // printf("%s, copy from [A,B,C] to [1,2,3]: %s\n", str0, str__);
-    
+
     // char str1[] = "1234567890";
     // memmove(str1 + 3, str1 + 4, 3); // copy from [5,6,7] to [4,5,6]
     // printf("%s, copy from [5,6,7] to [4,5,6]: %s\n", str0, str1);
@@ -51,18 +51,24 @@ void *my_memmove(void *dest, const void *src, size_t count)
     char *s = (char *)src;
     char *end = d + count;
     int overlapped = 0;
-    
-    char *t = s > d ? d : s;
-    char *T = s > d ? s : d;
-    for (; *t; t++)
+
+    if ((s < d && (s + count) > d) || (d < s && d + count > s))
     {
-        if (t == T)
-        {
-            overlapped = 1;
-            // printf("OVERLAPPED!!\n");
-            break;
-        }
+        printf("OVERLAPPED!!\n");
+        overlapped = 1;
     }
+    // char *t = s > d ? d : s;
+    // char *T = s > d ? s : d;
+
+    // for (; *t; t++)
+    // {
+    //     if (t == T)
+    //     {
+    //         overlapped = 1;
+    //         // printf("OVERLAPPED!!\n");
+    //         break;
+    //     }
+    // }
 
     if (overlapped && src < dest)
     {
