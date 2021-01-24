@@ -19,9 +19,9 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
 - [x] [my_strrstr](./my_strrstr.c): no ref.
 - [x] [my_strcasestr](./my_strcasestr.c) [^win_strcasestr]: [freebsd_strcasestr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strcasestr.c)
 - [x] [my_strcaserstr](./my_strcasestr.c): no ref.
-- [ ] strspn
+- [x] [my_strspn](./my_strspn.c): [cppref](https://en.cppreference.com/w/c/string/byte/strspn), [freebsd_strspn](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strspn.c)
 - [x] [my_strpbrk](./my_strpbrk.c): [cppref](https://en.cppreference.com/w/c/string/byte/strpbrk), [freebsd_strpbrk](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strpbrk.c)
-- [o] [my_strtok](./my_strtok.c): [cppref](https://en.cppreference.com/w/c/string/byte/strtok), [freebsd_strtok](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strtok.c)
+- [x] [my_strtok](./my_strtok.c): [cppref](https://en.cppreference.com/w/c/string/byte/strtok), [freebsd_strtok](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strtok.c)
 - [x] [my_memchr](./my_memchr.c): [cppref](https://en.cppreference.com/w/c/string/byte/memchr), [freebsd_memchr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memchr.c)
 - [x] [my_memset](./my_memset.c): [cppref](https://en.cppreference.com/w/c/string/byte/memset), [freebsd_memset](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memset.c)
 - [x] [my_memcpy](./my_memcpy.c): [cppref](https://en.cppreference.com/w/c/string/byte/memcpy), [freebsd_memcpy](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memcpy.c)
@@ -46,7 +46,7 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
 - Corss platform matters
   - `size_t` is `unsiged int type`: allow the user to input their respective allowed memory amount.
     - `printf` when it is 32bit (4 byte): `%u`; 64bit (8 byte): `%ull`
-    - see Jason's [Youtube ref](https://www.youtube.com/watch?v=JiUfvzd4eQM)
+    - see Jason's [YouTube ref](https://www.youtube.com/watch?v=JiUfvzd4eQM)
   - `unsigned char`
 - x86, x64
 - `gcc`: GNU C Compiler
