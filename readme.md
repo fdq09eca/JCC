@@ -1,10 +1,8 @@
-# ex
+# ex [^cpp]
 
-- [x] str_int_parser
-- [x] int_str_convert
-
-The following ex follow [cppreference.com](https://en.cppreference.com/w/c/string/byte):
-
+- [x] [str_int_parser](./int_parser.c)
+- [x] [int_str_convert](./int_str_convert.c): [j_int_parser](./j_int_str_convert.c)
+---
 - [x] [my_strcpy](./my_strcpy.c): [cppref](https://en.cppreference.com/w/c/string/byte/strcpy), [fdsb_strcpy](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strcpy.c)
 - [x] [my_strncpy](./my_strncpy.c): [cppref](https://en.cppreference.com/w/c/string/byte/strncpy), [fbsd_strncpy](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strncpy.c)
 - [x] [my_strlen](./my_strlen.c): [cppref](https://en.cppreference.com/w/c/string/byte/strlen), [fbsd_strlen](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strlen.c#L111)
@@ -32,7 +30,7 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
 [^a1]: Because wrong type. `*dest` is `char`, not `char *`.
 [^win_strcasestr]: Window version: `strcasestr` = `stristr`
 [^restrict]: what does `restrict` mean?
-
+[^cpp]: The following ex follow [cppreference.com](https://en.cppreference.com/w/c/string/byte).
 ## Note
 
 - 2d array formula = `rowIdx * numCol + colIdx`
