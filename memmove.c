@@ -46,8 +46,9 @@ int main()
 
 void *my_memmove(void *dest, const void *src, size_t count)
 {
-    if (dest == src) {
-        return dest;
+    if (dest == src)
+    {
+        return (void *)dest;
     }
 
     char *d = (char *)dest;
@@ -55,23 +56,11 @@ void *my_memmove(void *dest, const void *src, size_t count)
     char *end = d + count;
     int overlapped = 0;
 
-    if ((s < d && (s + count) > d) || (d < s && d + count > s))
+    if ((s < d && s + count > d) || (d < s && d + count > s))
     {
-        printf("OVERLAPPED!!\n");
+        // printf("OVERLAPPED!!\n");
         overlapped = 1;
     }
-    // char *t = s > d ? d : s;
-    // char *T = s > d ? s : d;
-
-    // for (; *t; t++)
-    // {
-    //     if (t == T)
-    //     {
-    //         overlapped = 1;
-    //         // printf("OVERLAPPED!!\n");
-    //         break;
-    //     }
-    // }
 
     if (overlapped && src < dest)
     {
@@ -82,20 +71,14 @@ void *my_memmove(void *dest, const void *src, size_t count)
             // printf("%i, *d: %c, *s = %c\n", i, *d, *s);
             *d = *s;
         }
+        return (void *)dest;
     }
-    else
+
+    for (int i = 0; d < end; d++, s++, i++)
     {
-        for (int i = 0; d < end; d++, s++, i++)
-        {
-            // printf("%i, *d: %c, *s = %c\n", i, *d, *s);
-            *d = *s;
-        }
+        // printf("%i, *d: %c, *s = %c\n", i, *d, *s);
+        *d = *s;
     }
+
     return (void *)dest;
 }
-
-/*
-1234567890
-   sd  e
-   
-*/
