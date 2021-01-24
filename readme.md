@@ -16,18 +16,22 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
 - [x] [my_strchr](./my_strchr.c): [cppref](https://en.cppreference.com/w/c/string/byte/strchr), [freebsd_strchr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strchr.c)
 - [x] [my_strrchr](./my_strrchr.c): [cppref](https://en.cppreference.com/w/c/string/byte/strrchr), [freebsd_strrchr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strrchr.c)
 - [x] [my_strstr](./my_strstr.c): [cppref](https://en.cppreference.com/w/c/string/byte/strstr), [freebsd_strstr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strstr.c)
-- [x] [my_strrstr](./my_strrstr.c): noref.
-- [x] [strcasestr/stristr (window)](./my_strcasestr.c): [freebsd_strcasestr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strcasestr.c)
-- [ ] **strcaserstr**/ **strirstr** (window)
-- [ ] strtok [^1]
-- [ ] memchr
-- [ ] memset
-- [ ] memcpy
-- [ ] memmove
+- [x] [my_strrstr](./my_strrstr.c): no ref.
+- [x] [my_strcasestr](./my_strcasestr.c) [^win_strcasestr]: [freebsd_strcasestr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strcasestr.c)
+- [x] [my_strcaserstr](./my_strcasestr.c): no ref.
+- [ ] strspn
+- [x] [my_strpbrk](./my_strpbrk.c): [cppref](https://en.cppreference.com/w/c/string/byte/strpbrk), [freebsd_strpbrk](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strpbrk.c)
+- [o] [my_strtok](./my_strtok.c): [cppref](https://en.cppreference.com/w/c/string/byte/strtok), [freebsd_strtok](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strtok.c)
+- [x] [my_memchr](./my_memchr.c): [cppref](https://en.cppreference.com/w/c/string/byte/memchr), [freebsd_memchr](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memchr.c)
+- [x] [my_memset](./my_memset.c): [cppref](https://en.cppreference.com/w/c/string/byte/memset), [freebsd_memset](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memset.c)
+- [x] [my_memcpy](./my_memcpy.c): [cppref](https://en.cppreference.com/w/c/string/byte/memcpy), [freebsd_memcpy](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memcpy.c)
+- [x] [my_memmove](./my_memmove.c): [cppref](https://en.cppreference.com/w/c/string/byte/memmove), [freebsd_memmove](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memmove.c)
 
 [^1]: `static buffer`
 [^p1]: Instead of doing the copy, I was thinking put the `char* src` at the `char* dest`'s null terminator position (as if linked list) but seems it is worng, why is it?
 [^a1]: Because wrong type. `*dest` is `char`, not `char *`.
+[^win_strcasestr]: Window version: `strcasestr` = `stristr`
+[^restrict]: what does `restrict` mean?
 
 ## Note
 
@@ -40,7 +44,7 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
   - Mac: from left to right i.e. `2 1 0`
   - Window: from right to left, i.e. `0 1 2`
 - Corss platform matters
-  - `size_t` is `unsiged int type`
+  - `size_t` is `unsiged int type`: allow the user to input their respective allowed memory amount.
     - `printf` when it is 32bit (4 byte): `%u`; 64bit (8 byte): `%ull`
     - see Jason's [Youtube ref](https://www.youtube.com/watch?v=JiUfvzd4eQM)
   - `unsigned char`
@@ -48,6 +52,7 @@ The following ex follow [cppreference.com](https://en.cppreference.com/w/c/strin
 - `gcc`: GNU C Compiler
   - `gcc -o my_strcat my_strcat.c my_strcpy.c` compile 2 `.c` together, only 1 `main(){}`.
 - `while (*s++){}` is different from `while (*s) {s++;}`
+- `char[] str != char* str`, modify string literal results in undefine behaviour, see [here](https://en.cppreference.com/w/cpp/language/string_literal) and [here](https://stackoverflow.com/questions/10186765/what-is-the-difference-between-char-array-and-char-pointer-in-c).
 
 *DEBUG: print out the pointer, deref.*
 
@@ -74,4 +79,4 @@ cc     my_strrchr.c   -o my_strrchr
 s0: 0x7ffee3a5959d, 7: 0x7ffee3a5959d
 ```
 
-- null terminator concept: **do not** rely on str length. 
+- null terminator concept: **do not** rely on str length.

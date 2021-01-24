@@ -46,6 +46,9 @@ int main()
 
 void *my_memmove(void *dest, const void *src, size_t count)
 {
+    if (dest == src) {
+        return dest;
+    }
 
     char *d = (char *)dest;
     char *s = (char *)src;
