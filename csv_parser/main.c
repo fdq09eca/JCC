@@ -1,124 +1,105 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int n_row(char *filename);
-int n_col(char *filename);
-void print_csv(char **csv, int R, int C);
-
-int main(int argc, char **argv)
+typedef struct
 {
-    char *filename = argv[1];
-    // FILE *f = fopen("test.csv", "r");
-    FILE *f = fopen(filename, "r");
-    char ch;
-    int R = n_row(filename);
-    int C = n_col(filename);
-    char *csv[R][C];
-    char *buff;
+    char *name;
+    char *content;
+} CSV;
 
-    int r = 0, c = 0;
-    int i = 0;
+char *file_ext(const char *fn);
+int my_strcmp(const char *str1, const char *str2);
+int is_csv(const char *fn);
+FILE *open_csv(const char *fn, char *);
+size_t file_size(FILE *f);
+char *read_csv(const char *fn);
+void init_csv(CSV *csv, char *fn);
+void close_csv(CSV *csv);
 
-    while ((ch = fgetc(f)) != EOF)
-    {
-        if (i == 0)
-        {
-            buff = (char *)malloc(sizeof(char) * 100);
-        }
-        if (ch == ',')
-        {
-            buff[i] = '\0';
-            i = 0;
-            csv[r][c] = buff;
-            // printf("r = %i; c = %i\n", r, c);
-            c++;
-        }
-        else if (ch == '\n')
-        {
-            buff[i] = '\0';
-            i = 0;
-            csv[r][c] = buff;
-            // printf("r = %i; c = %i\n", r, c);
-            r++;
-            c = 0;
-        }
-        else
-        {
-            if (ch == ' ' && i == 0)
-            {
-                continue;
-            }
-            buff[i] = ch;
-            i++;
-        }
-    }
-    fclose(f);
 
-    // print_csv(csv, R, C);
-
-    for (int i = 0; i < R; i++)
-    {
-        for (int j = 0; j < C; j++)
-        {
-            // printf("<%i><%i> %s\n", i, j, csv[i][j]);
-            printf("%s ", csv[i][j]);
-            if (j == C - 1)
-            {
-                printf("\n");
-            }
-        }
-    }
-
+int main()
+{
+    CSV csv;
+    init_csv(&csv, "test.csv");
+    // char *csv_ptr = read_csv("test.csv");
+    puts(csv.content);
+    close_csv(&csv);
     return 0;
 }
 
-int n_row(char *filename)
+void init_csv(CSV *csv, char *fn)
 {
-    FILE *f = fopen(filename, "r");
-    char ch;
-    int r = 0;
-    while ((ch = fgetc(f)) != EOF)
+    char *content = read_csv(fn);
+    if (!content)
     {
-        if (ch == '\n')
-        {
-            r++;
-        }
+        puts("NULL content.");
     }
-    fclose(f);
-    // printf("total row: %i\n", r);
-    return r;
+    csv->name = fn;
+    csv->content = content;
+    return;
 }
 
-int n_col(char *filename)
+char *read_csv(const char *fn)
 {
-    FILE *f = fopen(filename, "r");
-    char ch;
-    int c = 0;
-    while ((ch = fgetc(f)) != EOF)
+    FILE *f = open_csv(fn, "r");
+    if (!f)
     {
-        if (ch == ',')
-        {
-            c++;
-        }
+        puts("open csv failed.\n");
+        return NULL;
     }
+    size_t fs = file_size(f);
+    char *fc = (char *)malloc(fs * sizeof(char));
+    if (!fc)
+    {
+        puts("malloc failed.\n");
+        return NULL;
+    }
+    fread(fc, fs, 1, f);
     fclose(f);
-    c = c / n_row(filename) + 1;
-    // printf("total col: %i\n", c);
-    return c;
+    return fc;
 }
 
-// void print_csv(char **csv, int R, int C)
-// {
-//     for (int i = 0; i < R; i++)
-//     {
-//         for (int j = 0; j < C; j++)
-//         {
-//             // printf("<%i><%i> %s\n", i, j, csv[i][j]);
-//             printf("%s ", csv[i][j]);
-//             if (j == C - 1)
-//             {
-//                 printf("\n");
-//             }
-//         }
-//     }
-// }
+FILE *open_csv(const char *fn, char *mode)
+{
+    return (!is_csv(fn)) ? NULL : fopen(fn, mode);
+}
+
+size_t file_size(FILE *f)
+{
+    fseek(f, 0, SEEK_END);
+    size_t size = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    return size;
+}
+
+int is_csv(const char *fn)
+{
+    return my_strcmp(file_ext(fn), ".csv") ? 0 : 1;
+}
+
+char *file_ext(const char *fn)
+{
+    for (; *fn; fn++)
+    {
+        if (*fn == '.')
+            return (char *)fn;
+    }
+    return NULL;
+}
+
+int my_strcmp(const char *str1, const char *str2)
+{
+    for (; *str1; str1++, str2++)
+    {
+        if (*str1 != *str2)
+            break;
+    }
+    return *(unsigned char *)str1 - *(unsigned char *)str2;
+}
+
+void close_csv(CSV* csv)
+{
+    free(csv->content);
+    puts("csv closed.\n");
+    return;
+}

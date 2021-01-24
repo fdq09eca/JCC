@@ -1,81 +1,26 @@
 # CSV parser
 
-## Quick start
+## spec
 
-```bash
-./main test.csv   
-```
+1. character `,` is allowed in the cell.
+2. empty string is allowed in the cell.
+3. there could be different column.
+4. allocated memory must be released.
 
-## Objective
+## plan
 
-- Read the csv file and print it to console.
+- [ ] read `*.csv` to the memory.
+- [ ] create `struct cell`, `struct row`, `struct csv`.
+- [ ] dump the `struct csv` to concole.
 
-## Assumption
+### read `*,csv`
 
-1. `csv` file has no `,` in elements.
-2. `csv` file row must end by a `\n` i.e. newline character.
-3. `csv` file must be balance. i.e. no missing delimitor (`,`)
+- why do we prefer `void init_csv(CSV *csv, char *fn);` over `CSV init_csv(char *fn);`?
 
-## Question
+### create `struct row`
 
-1. How to use `fread`/`fwrite` for byte by byte file reading/writing?
-2. How to put the following in to a function and call it in the main?
+### create `struct cell`
 
-```c
-for (int i = 0; i < R; i++)
-    {
-        for (int j = 0; j < C; j++)
-        {
-            printf("%s ", csv[i][j]);
-            if (j == C - 1)
-            {
-                printf("\n");
-            }
-        }
-    }
-```
+## ref
 
-It is what I tried:
-
-```c
-void print_csv(char **csv, int R, int C)
-for (int i = 0; i < R; i++)
-    {
-        for (int j = 0; j < C; j++)
-        {
-            // printf("<%i><%i> %s\n", i, j, csv[i][j]);
-            printf("%s ", csv[i][j]);
-            if (j == C - 1)
-            {
-                printf("\n");
-            }
-        }
-    }
-```
-
-I call it like this
-
-```c
-print_csv(csv, R, C);
-```
-
-where `csv` is a 2d `char*` array.
-
-Here is the error
-
-```sh
-~/JCC/csv_praser(master*) » make main &&./main test.csv                                                                                                                            macone@Macs-MBP
-cc     main.c   -o main
-main.c:57:15: warning: incompatible pointer types passing 'char *[R][C]' to parameter of type 'char **' [-Wincompatible-pointer-types]
-    print_csv(csv, R, C);
-              ^~~
-main.c:6:23: note: passing argument to parameter 'csv' here
-void print_csv(char **csv, int R, int C);
-                      ^
-main.c:117:27: warning: format specifies type 'char *' but the argument has type 'char' [-Wformat]
-            printf("%s ", csv[i][j]);
-                    ~~    ^~~~~~~~~
-                    %c
-2 warnings generated.
-[1]    25830 segmentation fault  ./main test.csv
-```
+[簡單黎講C Plus Plus](https://www.youtube.com/watch?v=cdTnj6rtEMI)
