@@ -34,6 +34,7 @@ void close_csv(CSV *csv);
 char *parse_row(CSV *csv);
 void print_rows(CSV *csv);
 void print_csv(CSV *csv);
+char *nextchr(char *str, char ch);
 
 int main()
 {
@@ -49,6 +50,10 @@ size_t n_cell(ROW *row)
     size_t n = 0;
     for (char *c = row->data; *c; c++)
     {
+        if (*c == '"')
+        {
+            c = nextchr(c, '"');
+        }
         if (*c == ',')
         {
             n++;
@@ -57,20 +62,28 @@ size_t n_cell(ROW *row)
     return n + 1;
 }
 
-char *parse_cell(ROW *row, char** save)
+char *parse_cell(ROW *row, char **save)
 {
-    // static char *save = NULL;
     char *buff = malloc(200 * sizeof(char));
 
     char *b = buff;
     char *c = *save ? *save : row->data;
-    
-    for (; *c; c++, b++)
+
+    int dq = 0;
+    for (;; c++, b++)
     {
-        *b = *c;
-        if (*c == ',')
+        if (*c == '"')
         {
-            *b = 0;
+            dq++;
+        }
+        *b = *c;
+        if (*c == ',' || *c == '\0')
+        {
+            if (dq % 2) // if dq is odd, the char* c is in the double quote.
+            {
+                continue;
+            }
+            *b = '\0';
             *save = c + 1;
             return buff;
         }
@@ -83,10 +96,10 @@ void load_cell(ROW *row)
     size_t row_n = row->row_n;
     CELL *cell = row->cells;
     CELL *end = cell + row->n_cell;
-    char * save = NULL;
+    char *save = NULL;
     for (int n = 0; cell < end; cell++, n++)
     {
-        char* c = parse_cell(row, &save);
+        char *c = parse_cell(row, &save);
         if (!c)
         {
             break;
@@ -101,10 +114,20 @@ void load_cell(ROW *row)
 size_t n_row(CSV *csv)
 {
     size_t n = 0;
+    size_t dq = 0;
     for (char *c = csv->data; *c; c++)
     {
+        if (*c == '"')
+        {
+            dq++;
+        }
         if (*c == '\n')
         {
+            // if (dq % 2 || *(c - 1) = '\\') // not sure if escape char is allowed.
+            if (dq % 2)
+            {
+                continue;
+            }
             n++;
         }
     }
@@ -249,12 +272,14 @@ int my_strcmp(const char *str1, const char *str2)
     return *(unsigned char *)str1 - *(unsigned char *)str2;
 }
 
-void free_cells(ROW* row) {
+void free_cells(ROW *row)
+{
     CELL *cell = row->cells;
     CELL *end = cell + row->n_cell;
     size_t row_n = row->row_n;
 
-    for (int cell_n = 0; cell < end; cell++, cell_n++) {
+    for (int cell_n = 0; cell < end; cell++, cell_n++)
+    {
         printf("cell: %zu%i freed.\n", row_n, cell_n);
         free(cell->data);
     }
@@ -272,7 +297,6 @@ void free_rows(CSV *csv)
         free_cells(row);
         printf("row %i freed.\n", roll_n);
         free(row->data);
-
     }
     free(csv->rows);
     printf("all rows freed.\n");
@@ -286,24 +310,31 @@ void close_csv(CSV *csv)
     return;
 }
 
-char* trim(char* str) {
-    char*s = str;
+char *trim(char *str)
+{
+    char *s = str;
 
-    for (char* s = str; *s; s++) {
-        if (*s != ' ') {
+    for (char *s = str; *s; s++)
+    {
+        if (*s != ' ')
+        {
             break;
         }
     }
     return s;
 }
 
-char* nextchr(char* str, char ch) {
+char *nextchr(char *str, char ch)
+{
     int c = 0;
-    for (char* s = str; *s ; s++ ) {
-        if (*s == ch) {
+    for (char *s = str; *s; s++)
+    {
+        if (*s == ch)
+        {
             c++;
         }
-        if (c == 2) {
+        if (c == 2)
+        {
             return s;
         }
     }
