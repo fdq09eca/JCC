@@ -10,8 +10,8 @@ typedef struct
 typedef struct
 {
     char *data;
-    size_t row_n;
     size_t n_cell;
+    size_t row_n;
     CELL *cells;
 } ROW;
 
@@ -39,7 +39,7 @@ int main()
 {
     CSV csv;
     init_csv(&csv, "test.csv");
-    print_csv(&csv);
+    // print_csv(&csv);
     close_csv(&csv);
     return 0;
 }
@@ -57,20 +57,21 @@ size_t n_cell(ROW *row)
     return n;
 }
 
-char *parse_cell(ROW *row)
+char *parse_cell(ROW *row, char** save)
 {
-    static char *save = NULL;
+    // static char *save = NULL;
     char *buff = malloc(200 * sizeof(char));
 
     char *b = buff;
-    char *c = save ? save : row->data;
+    char *c = *save ? *save : row->data;
+    
     for (; *c; c++, b++)
     {
         *b = *c;
         if (*c == ',')
         {
             *b = 0;
-            save = c + 1;
+            *save = c + 1;
             return buff;
         }
     }
@@ -79,15 +80,18 @@ char *parse_cell(ROW *row)
 
 void load_cell(ROW *row)
 {
+    size_t row_n = row->row_n;
     CELL *cell = row->cells;
     CELL *end = cell + row->n_cell;
+    char * save = NULL;
     for (int n = 0; cell < end; cell++, n++)
     {
-        char* c = parse_cell(row);
+        char* c = parse_cell(row, &save);
         if (!c)
         {
             break;
         }
+        printf("load cell%zu%i: %s\n", row_n, n, c);
         cell->cell_n = n;
         cell->data = c;
     }
@@ -114,6 +118,7 @@ void init_row(ROW *row, size_t n, char *data)
     row->n_cell = n_cell(row);
     row->cells = (CELL *)malloc(sizeof(CELL) * row->n_cell);
     load_cell(row);
+    return;
 }
 
 char *parse_row(CSV *csv)
@@ -145,7 +150,7 @@ void load_rows(CSV *csv)
         char *data = parse_row(csv);
         if (!data)
             return;
-        printf("load row %i: %s\n", n, data);
+        printf("load row %i...\n", n);
         init_row(row, n, data);
     }
     return;
@@ -247,13 +252,14 @@ int my_strcmp(const char *str1, const char *str2)
 void free_cells(ROW* row) {
     CELL *cell = row->cells;
     CELL *end = cell + row->n_cell;
+    size_t row_n = row->row_n;
 
-    for (int n = 0; cell < end; cell++, n++) {
-        printf("cell %i freed.\n", n);
+    for (int cell_n = 0; cell < end; cell++, cell_n++) {
+        printf("cell: %zu%i freed.\n", row_n, cell_n);
         free(cell->data);
     }
     free(row->cells);
-    printf("all cells freed.\n");
+    printf("all cells in row %zu freed.\n", row->row_n);
 }
 
 void free_rows(CSV *csv)
@@ -261,10 +267,10 @@ void free_rows(CSV *csv)
     ROW *row = csv->rows;
     ROW *end = row + csv->n_row;
 
-    for (int n = 0; row < end; row++, n++)
+    for (int roll_n = 0; row < end; row++, roll_n++)
     {
         free_cells(row);
-        printf("row %i freed.\n", n);
+        printf("row %i freed.\n", roll_n);
         free(row->data);
 
     }
