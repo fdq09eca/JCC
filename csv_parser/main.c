@@ -54,7 +54,7 @@ size_t n_cell(ROW *row)
             n++;
         }
     }
-    return n;
+    return n + 1;
 }
 
 char *parse_cell(ROW *row, char** save)
@@ -284,4 +284,28 @@ void close_csv(CSV *csv)
     free_rows(csv);
     puts("csv closed.\n");
     return;
+}
+
+char* trim(char* str) {
+    char*s = str;
+
+    for (char* s = str; *s; s++) {
+        if (*s != ' ') {
+            break;
+        }
+    }
+    return s;
+}
+
+char* nextchr(char* str, char ch) {
+    int c = 0;
+    for (char* s = str; *s ; s++ ) {
+        if (*s == ch) {
+            c++;
+        }
+        if (c == 2) {
+            return s;
+        }
+    }
+    return str;
 }
