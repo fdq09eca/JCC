@@ -36,3 +36,18 @@ make main && ./main
 ## ref
 
 [簡單黎講C Plus Plus](https://www.youtube.com/watch?v=cdTnj6rtEMI)
+
+## note
+
+1. Marco debug_print:
+
+```c
+#if _DEBUG
+  #define debug_print(...)  printf(__VA_ARGS__)
+#else
+  #define debug_print(...)
+#endif
+```
+
+2. debug time.
+3. `cell->data = strdup(buff)`
