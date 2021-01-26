@@ -242,6 +242,7 @@ char *read_csv(const char *fn)
         puts("open csv failed.\n");
         return NULL;
     }
+    // printf("%s opened.", fn);
     size_t fs = file_size(f);
     char *fc = (char *)malloc(fs * sizeof(char));
     if (!fc)
@@ -250,7 +251,9 @@ char *read_csv(const char *fn)
         return NULL;
     }
     fread(fc, fs, 1, f);
+    // printf("%s content loaded to memory.", fn);
     fclose(f);
+    // printf("%s closed.", fn);
     return fc;
 }
 
@@ -326,7 +329,7 @@ void close_csv(CSV *csv)
 {
     free(csv->data);
     free_rows(csv);
-    puts("csv closed.\n");
+    puts("all memory freed.\n");
     return;
 }
 
@@ -335,7 +338,7 @@ ROW *get_row(CSV *csv, size_t r)
     size_t n_row = csv->n_row;
     if (r >= n_row)
     {
-        printf("warnning: row range: 0 - %zu", n_row - 1);
+        printf("warning: row range: 0 - %zu", n_row - 1);
         return NULL;
     }
     ROW *row = csv->rows;
@@ -347,7 +350,7 @@ CELL *get_cell(CSV *csv, size_t r, size_t c)
     size_t n_cell = row->n_cell;
     if (c >= n_cell)
     {
-        printf("warnning: cell range: 0 - %zu", n_cell - 1);
+        printf("warning: cell range: 0 - %zu", n_cell - 1);
         return NULL;
     }
     CELL *cell = row->cells;
