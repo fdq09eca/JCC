@@ -39,16 +39,18 @@ void print_csv(CSV *csv);
 char *nextchr(char *str, char ch);
 ROW *get_row(CSV *csv, size_t r);
 CELL *get_cell(CSV *csv, size_t r, size_t c);
+void debug_print(CSV *csv);
 
 int main()
 {
     CSV csv;
     init_csv(&csv, "test.csv");
-    print_csv(&csv);
-    ROW *r = get_row(&csv, 0);
-    printf(">> row %zu: %s\n", r->row_n, r->data);
-    CELL *c = get_cell(&csv, 1, 2);
-    printf(">> cell %zu: %s\n", c->cell_n, c->data);
+    debug_print(&csv);
+    // print_csv(&csv);
+    // ROW *r = get_row(&csv, 1);
+    // printf(">> row %zu: %s\n", r->row_n, r->data);
+    // CELL *c = get_cell(&csv, 1, 0);
+    // printf(">> cell %zu: %s\n", c->cell_n, c->data);
     // print_csv(&csv);
     close_csv(&csv);
     return 0;
@@ -120,7 +122,7 @@ void load_cell(ROW *row)
         {
             break;
         }
-        printf("load cell%zu%i: %s\n", row_n, n, data);
+        // printf("load cell%zu%i: %s\n", row_n, n, data);
         init_cell(cell, n, data);
     }
     return;
@@ -196,7 +198,7 @@ void load_rows(CSV *csv)
         char *data = parse_row(csv, &save);
         if (!data)
             return;
-        printf("load row %i...\n", n);
+        // printf("load row %i...\n", n);
         init_row(row, n, data);
     }
     return;
@@ -298,11 +300,11 @@ void free_cells(ROW *row)
 
     for (int cell_n = 0; cell < end; cell++, cell_n++)
     {
-        printf("cell: %zu%i freed.\n", row_n, cell_n);
+        // printf("cell: %zu%i freed.\n", row_n, cell_n);
         free(cell->data);
     }
     free(row->cells);
-    printf("all cells in row %zu freed.\n", row->row_n);
+    // printf("all cells in row %zu freed.\n", row->row_n);
 }
 
 void free_rows(CSV *csv)
@@ -313,11 +315,11 @@ void free_rows(CSV *csv)
     for (int roll_n = 0; row < end; row++, roll_n++)
     {
         free_cells(row);
-        printf("row %i freed.\n", roll_n);
+        // printf("row %i freed.\n", roll_n);
         free(row->data);
     }
     free(csv->rows);
-    printf("all rows freed.\n");
+    // printf("all rows freed.\n");
 }
 
 void close_csv(CSV *csv)
@@ -381,4 +383,20 @@ char *nextchr(char *str, char ch)
         }
     }
     return str;
+}
+
+void debug_print(CSV *csv)
+{
+
+    for (int r = 0; r < csv->n_row; r++)
+    {
+        ROW *row = get_row(csv, r);
+        for (int c = 0; c < row->n_cell; c++)
+        {
+            CELL *cell = get_cell(csv, r, c);
+            // printf("%i%i: %s ", r, c, cell->data);
+            printf("%s ", cell->data);
+        }
+        printf("\n");
+    }
 }
