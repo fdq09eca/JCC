@@ -391,10 +391,11 @@ void debug_print(CSV *csv)
     for (int r = 0; r < csv->n_row; r++)
     {
         ROW *row = get_row(csv, r);
+        // printf("row%i: %s", r, row->data);
         for (int c = 0; c < row->n_cell; c++)
         {
             CELL *cell = get_cell(csv, r, c);
-            // printf("%i%i: %s ", r, c, cell->data);
+            // printf("cell%i%i: %s ", r, c, cell->data);
             printf("%s ", cell->data);
         }
         printf("\n");
