@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define CELL_SIZE 500
+#define ROW_SIZE (CELL_SIZE * 10)
 
 typedef struct
 {
@@ -31,15 +33,22 @@ size_t file_size(FILE *f);
 char *read_csv(const char *fn);
 void init_csv(CSV *csv, char *fn);
 void close_csv(CSV *csv);
-char *parse_row(CSV *csv);
+char *parse_row(CSV *csv, char **save);
 void print_rows(CSV *csv);
 void print_csv(CSV *csv);
 char *nextchr(char *str, char ch);
+ROW *get_row(CSV *csv, size_t r);
+CELL *get_cell(CSV *csv, size_t r, size_t c);
 
 int main()
 {
     CSV csv;
     init_csv(&csv, "test.csv");
+    print_csv(&csv);
+    ROW *r = get_row(&csv, 0);
+    printf(">> row %zu: %s\n", r->row_n, r->data);
+    CELL *c = get_cell(&csv, 1, 2);
+    printf(">> cell %zu: %s\n", c->cell_n, c->data);
     // print_csv(&csv);
     close_csv(&csv);
     return 0;
@@ -64,7 +73,7 @@ size_t n_cell(ROW *row)
 
 char *parse_cell(ROW *row, char **save)
 {
-    char *buff = malloc(200 * sizeof(char));
+    char *buff = malloc(CELL_SIZE * sizeof(char));
 
     char *b = buff;
     char *c = *save ? *save : row->data;
@@ -79,7 +88,7 @@ char *parse_cell(ROW *row, char **save)
         *b = *c;
         if (*c == ',' || *c == '\0')
         {
-            if (dq % 2) // if dq is odd, the char* c is in the double quote.
+            if (dq % 2)
             {
                 continue;
             }
@@ -91,6 +100,13 @@ char *parse_cell(ROW *row, char **save)
     return NULL;
 }
 
+void init_cell(CELL *cell, size_t n, char *data)
+{
+    cell->cell_n = n;
+    cell->data = data;
+    return;
+}
+
 void load_cell(ROW *row)
 {
     size_t row_n = row->row_n;
@@ -99,14 +115,13 @@ void load_cell(ROW *row)
     char *save = NULL;
     for (int n = 0; cell < end; cell++, n++)
     {
-        char *c = parse_cell(row, &save);
-        if (!c)
+        char *data = parse_cell(row, &save);
+        if (!data)
         {
             break;
         }
-        printf("load cell%zu%i: %s\n", row_n, n, c);
-        cell->cell_n = n;
-        cell->data = c;
+        printf("load cell%zu%i: %s\n", row_n, n, data);
+        init_cell(cell, n, data);
     }
     return;
 }
@@ -123,7 +138,6 @@ size_t n_row(CSV *csv)
         }
         if (*c == '\n')
         {
-            // if (dq % 2 || *(c - 1) = '\\') // not sure if escape char is allowed.
             if (dq % 2)
             {
                 continue;
@@ -144,20 +158,28 @@ void init_row(ROW *row, size_t n, char *data)
     return;
 }
 
-char *parse_row(CSV *csv)
+char *parse_row(CSV *csv, char **save)
 {
-    static char *save = NULL;
-    char *buff = malloc(200 * sizeof(char));
+    char *buff = malloc(ROW_SIZE * sizeof(char));
 
     char *b = buff;
-    char *c = save ? save : csv->data;
+    char *c = *save ? *save : csv->data;
+    int dq = 0;
     for (; *c; c++, b++)
     {
         *b = *c;
+        if (*c == '"')
+        {
+            dq++;
+        }
         if (*c == '\n')
         {
+            if (dq % 2)
+            {
+                continue;
+            }
             *b = 0;
-            save = c + 1;
+            *save = c + 1;
             return buff;
         }
     }
@@ -168,9 +190,10 @@ void load_rows(CSV *csv)
 {
     ROW *row = csv->rows;
     ROW *end = row + csv->n_row;
+    char *save = NULL;
     for (int n = 0; row < end; row++, n++)
     {
-        char *data = parse_row(csv);
+        char *data = parse_row(csv, &save);
         if (!data)
             return;
         printf("load row %i...\n", n);
@@ -201,16 +224,11 @@ void print_csv(CSV *csv)
 void init_csv(CSV *csv, char *fn)
 {
     char *data = read_csv(fn);
-    if (!data)
-    {
-        puts("NULL data.");
-    }
     csv->name = fn;
     csv->data = data;
     csv->n_row = n_row(csv);
     csv->rows = (ROW *)malloc(sizeof(ROW) * csv->n_row);
     load_rows(csv);
-    // csv->rows = ROW arr[csv->n_row];
     return;
 }
 
@@ -308,6 +326,30 @@ void close_csv(CSV *csv)
     free_rows(csv);
     puts("csv closed.\n");
     return;
+}
+
+ROW *get_row(CSV *csv, size_t r)
+{
+    size_t n_row = csv->n_row;
+    if (r >= n_row)
+    {
+        printf("warnning: row range: 0 - %zu", n_row - 1);
+        return NULL;
+    }
+    ROW *row = csv->rows;
+    return row + r;
+}
+CELL *get_cell(CSV *csv, size_t r, size_t c)
+{
+    ROW *row = get_row(csv, r);
+    size_t n_cell = row->n_cell;
+    if (c >= n_cell)
+    {
+        printf("warnning: cell range: 0 - %zu", n_cell - 1);
+        return NULL;
+    }
+    CELL *cell = row->cells;
+    return cell + c;
 }
 
 char *trim(char *str)
