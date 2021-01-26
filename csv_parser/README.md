@@ -1,5 +1,11 @@
 # CSV parser
 
+## quick start
+
+```sh
+make main && ./main
+```
+
 ## spec
 
 - [x] character `,`, `\n` is allowed in the cell.
