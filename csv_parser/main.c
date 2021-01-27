@@ -274,16 +274,16 @@ size_t file_size(FILE *f)
     return size;
 }
 
-int is_csv(const char *fn)
+size_t is_csv(const char *fn)
 {
-    return my_strcmp(file_ext(fn), ".csv") ? 0 : 1;
+    return my_strcmp(file_ext(fn), ".csv") ? 0 : 1; // it could be UPPERCASE: .CSV
 }
 
 char *file_ext(const char *fn)
 {
     for (; *fn; fn++)
     {
-        if (*fn == '.')
+        if (*fn == '.') // last 3 dight csv , strrchr
             return (char *)fn;
     }
     return NULL;
@@ -321,7 +321,7 @@ void free_rows(CSV *csv)
 
     for (int roll_n = 0; row < end; row++, roll_n++)
     {
-        free_cells(row);
+        free_cells(row); //free_cell
         // printf("row %i freed.\n", roll_n);
         free(row->data);
     }
@@ -332,7 +332,7 @@ void free_rows(CSV *csv)
 void free_csv(CSV *csv)
 {
     free(csv->data);
-    free_rows(csv);
+    free_rows(csv); // free_row
     puts("all memory freed.\n");
     return;
 }
@@ -342,19 +342,35 @@ ROW *get_row(CSV *csv, size_t r)
     size_t n_row = csv->n_row;
     if (r >= n_row)
     {
-        printf("warning: row range: 0 - %zu", n_row - 1);
+        printf("warning: row range: 0 ~ %zu", n_row - 1);
         return NULL;
     }
     ROW *row = csv->rows;
     return row + r;
 }
+
+CELL* get_row_cell(ROW* row, size_t c){
+    if (!row) {
+        printf("warning: ROW* is null.\n");
+        return NULL;
+    }
+    size_t n_cell = row->n_cell;
+    if (c >= n_cell) {
+        printf("warning: row range: 0 ~ %zu\n", n_cell - 1);
+        return NULL;
+    }
+
+    return row->cells + c;
+}
+
 CELL *get_cell(CSV *csv, size_t r, size_t c)
 {
     ROW *row = get_row(csv, r);
+    
     size_t n_cell = row->n_cell;
     if (c >= n_cell)
     {
-        printf("warning: cell range: 0 - %zu", n_cell - 1);
+        printf("warning: cell range: 0 ~ %zu", n_cell - 1);
         return NULL;
     }
     CELL *cell = row->cells;

@@ -39,7 +39,7 @@ make main && ./main
 
 ## note
 
-1. Marco debug_print:
+1. Marco `debug_print`:
 
 ```c
 #if _DEBUG
@@ -51,3 +51,67 @@ make main && ./main
 
 2. debug time.
 3. `cell->data = strdup(buff)`
+   1. one working buffer -> `strdup(buff)` for the result to reduce memory footprint.
+4. double quote feature can't handle single double quote.
+   1. "Samsung U600 24""asas" -> Samsung U600 24"
+
+## note 2
+
+- dangling pointer
+- ownership concept
+- PAIRING
+  - init -> release
+  - open -> close
+  - size -> array
+  - allocate -> free, even pointer, consider ownship
+  - check buffer size to prevent buffer overrun.
+
+## HW
+
+- printf
+
+```c
+void my_printf(const char* fmt, int p0, char* p2) {
+}
+
+
+int a = 10;
+char* s = "Hello";
+
+my_printf("a=[%04d] s=[%10s]", a, s);
+
+a=[0010] s=[     Hello]
+```
+
+- link list
+  - insert
+  - del(idx)
+  - reverse
+- double link list
+- dynamic array
+  - insert(idx)
+
+- black jack.
+
+number of Deck?
+
+number of Player (Max 8)? 3
+
+Player1 $: inital $ -> 100
+Player2 $: inital $ -> 100
+Player3 $: inital $ -> 100
+
+$: 0
+Bet: 10
+
+Dealer: 9s
+Player: Qh, As
+
+`BJ? bet * 1.5 : bet;`
+
+Player: more card? [Y/N]
+
+<!-- Player: split [Y/N] -->
+<!-- Player: double bet [Y/N] -->
+<!-- Player:  -->
+
