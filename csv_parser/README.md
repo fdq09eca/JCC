@@ -109,7 +109,7 @@ Player: Qh, As
 
 `BJ? bet * 1.5 : bet;`
 
-Player: more card? [Y/N]
+Player: more card? \[Y/N\]
 
 <!-- Player: split [Y/N] -->
 <!-- Player: double bet [Y/N] -->
