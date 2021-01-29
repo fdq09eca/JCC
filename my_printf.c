@@ -4,7 +4,7 @@ void skip_ch(char **c, char ch);
 int parse_int(char **c);
 void print_int(int v, int pad, int z_pad);
 void print_str(char *str, int pad, int z_pad);
-void my_printf(const char *fmt, int p0, char *p2);
+void my_printf(const char *fmt, int p0, char *p1);
 
 int main()
 {
