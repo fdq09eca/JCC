@@ -32,7 +32,7 @@ void my_printf(const char *fmt, int p0, char *p1)
             int pad = 0;
 
             f++;
-            c++; // look forward
+            c++; // check next char
 
             if (!*c)
             {
@@ -40,7 +40,7 @@ void my_printf(const char *fmt, int p0, char *p1)
                 return;
             }
 
-            if (*c == '%') //ecaspe char %
+            if (*c == '%') // ecaspe char %
             {
                 continue;
             }
