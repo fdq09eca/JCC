@@ -2,6 +2,11 @@
 
 void print_int(int v)
 {
+    if (v == 0)
+    {
+        putc('0', stdout);
+        return;
+    }
     if (v < 0)
     {
         putc('-', stdout);
@@ -28,7 +33,7 @@ void print_int(int v)
 
 int main()
 {
-    print_int(1234);
+    print_int(876);
 
     return 0;
 }
