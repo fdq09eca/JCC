@@ -24,6 +24,7 @@
 - [x] [my_memset](./my_memset.c): [cppref](https://en.cppreference.com/w/c/string/byte/memset), [freebsd_memset](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memset.c)
 - [x] [my_memcpy](./my_memcpy.c): [cppref](https://en.cppreference.com/w/c/string/byte/memcpy), [freebsd_memcpy](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memcpy.c)
 - [x] [my_memmove](./my_memmove.c): [cppref](https://en.cppreference.com/w/c/string/byte/memmove), [freebsd_memmove](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/memmove.c)
+- [x] [my_printf](./my_printf.c): no_ref; given prototype: `void my_printf(const char *fmt, int p0, char *p1);`
 
 [^1]: `static buffer`
 [^p1]: Instead of doing the copy, I was thinking put the `char* src` at the `char* dest`'s null terminator position (as if linked list) but seems it is worng, why is it?
