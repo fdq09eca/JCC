@@ -24,7 +24,7 @@ void my_printf(const char *fmt, int p0, char *p1)
 {
 
     int f = 0; // Chris: it is ugly
-    for (char *c = (char *)fmt; *c; c++)
+    for (const char *c = fmt; *c; c++)
     {
         if (*c == '%')
         {
@@ -42,6 +42,7 @@ void my_printf(const char *fmt, int p0, char *p1)
 
             if (*c == '%') // ecaspe char %
             {
+                putchar(*c);
                 continue;
             }
 
@@ -55,6 +56,7 @@ void my_printf(const char *fmt, int p0, char *p1)
             // printf("c: %c, pad: %i",*c,  pad);
 
             if (f == 1 && (*c == 'd' || *c == 'i')) // << hard coded position..? any improvement? enum? how?
+            // va_list(list, int)
             {
                 print_int(p0, pad, z_pad);
                 continue;
@@ -84,7 +86,7 @@ int parse_int(char **c)
 
 void skip_ch(char **c, char ch)
 {
-    for (; **c == '0'; (*c)++)
+    for (; **c == ch; (*c)++)
     {
         // skip '0'
     }
@@ -93,7 +95,7 @@ void skip_ch(char **c, char ch)
 int n_digit(int v)
 {
     int n = 0;
-    while ((int)v)
+    while (v)
     {
         v /= 10;
         n++;
