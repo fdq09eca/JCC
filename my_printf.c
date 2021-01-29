@@ -40,7 +40,7 @@ void my_printf(const char *fmt, int p0, char *p1)
                 return;
             }
 
-            if (*c == '%')
+            if (*c == '%') //ecaspe char %
             {
                 continue;
             }
