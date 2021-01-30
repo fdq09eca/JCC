@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 void skip_ch(char **c, char ch);
-int parse_int(char **c);
+int parse_int(const char **c);
 void print_int(int v, int pad, int z_pad);
 void print_str(char *str, int pad, int z_pad);
 void my_printf(const char *fmt, int p0, char *p1);
@@ -49,7 +49,7 @@ void my_printf(const char *fmt, int p0, char *p1)
             if (*c == '0')
             {
                 z_pad = 1;
-                skip_ch(&c, '0'); // trim zero
+                // skip_ch(&c, '0'); // trim zero
             }
 
             pad = parse_int(&c);
@@ -73,7 +73,7 @@ void my_printf(const char *fmt, int p0, char *p1)
     }
 }
 
-int parse_int(char **c)
+int parse_int(const char **c)
 {
     int v = 0;
     for (; **c >= '0' && **c <= '9'; (*c)++)
@@ -103,7 +103,7 @@ int n_digit(int v)
     return n;
 }
 
-void printnc(int n, char c)
+void print_n_ch(int n, char c)
 {
     for (int i = 0; i < n; i++)
     {
@@ -111,18 +111,18 @@ void printnc(int n, char c)
     }
 }
 
-void print_pad(int strlen, int pad, int z_pad)
+void print_pad(int s_len, int pad, int z_pad)
 {
-    int p = pad - strlen;
+    int p = pad - s_len;
     if (p)
     {
         if (z_pad)
         {
-            printnc(p, '0');
+            print_n_ch(p, '0');
         }
         else
         {
-            printnc(p, ' ');
+            print_n_ch(p, ' ');
         }
     }
 }
