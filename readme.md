@@ -1,4 +1,54 @@
-# ex [^cpp]
+## HW
+
+![](ll.png)
+
+- linked list
+  - insert(Node* n) (after)
+  - remove(Node* n)
+  - Node* pop_head()
+  - void reverse()
+  - Node* find(int v)
+  
+- doubly linked list
+  - insert(Node* n) (after)
+  - remove(Node* n)
+  - Node* pop_head(MyList)
+  - Node* pop_tail()
+  - void reverse()
+  - Node* find(int v)
+
+- dynamic array
+  - insert(idx, int)
+  - append(int)
+  - void remove_at(idx)
+  - int remove(int)
+  - idx find(int)
+  - selection_sort
+
+- black jack.
+
+number of Deck?
+number of Player (Max 8)? 3
+
+Player1 $: inital $ -> 100
+Player2 $: inital $ -> 100
+Player3 $: inital $ -> 100
+
+$: 0
+Bet: 10
+
+Dealer: 9s
+Player: Qh, As
+
+`BJ? bet * 1.5 : bet;`
+
+Player: more card? \[Y/N\]
+
+<!-- Player: split [Y/N] -->
+<!-- Player: double bet [Y/N] -->
+<!-- Player:  -->
+
+## done ex [^cpp]
 
 - [x] [str_int_parser](./int_parser.c)
 - [x] [int_str_convert](./int_str_convert.c): [j_int_parser](./j_int_str_convert.c)
