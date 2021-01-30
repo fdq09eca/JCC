@@ -84,14 +84,6 @@ int parse_int(const char **c)
     return v;
 }
 
-void skip_ch(char **c, char ch)
-{
-    for (; **c == ch; (*c)++)
-    {
-        // skip '0'
-    }
-}
-
 int n_digit(int v)
 {
     int n = 0;
