@@ -108,14 +108,8 @@ void print_pad(int s_len, int pad, int z_pad)
     int p = pad - s_len;
     if (p)
     {
-        if (z_pad)
-        {
-            print_n_ch(p, '0');
-        }
-        else
-        {
-            print_n_ch(p, ' ');
-        }
+        char ch = z_pad? '0':' ';
+        print_n_ch(p, ch);
     }
 }
 
