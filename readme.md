@@ -2,7 +2,9 @@
 
 - [x] [str_int_parser](./int_parser.c)
 - [x] [int_str_convert](./int_str_convert.c): [j_int_parser](./j_int_str_convert.c)
+
 ---
+
 - [x] [my_strcpy](./my_strcpy.c): [cppref](https://en.cppreference.com/w/c/string/byte/strcpy), [fdsb_strcpy](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strcpy.c)
 - [x] [my_strncpy](./my_strncpy.c): [cppref](https://en.cppreference.com/w/c/string/byte/strncpy), [fbsd_strncpy](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strncpy.c)
 - [x] [my_strlen](./my_strlen.c): [cppref](https://en.cppreference.com/w/c/string/byte/strlen), [fbsd_strlen](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strlen.c#L111)
@@ -34,7 +36,7 @@
 [^cpp]: The following ex follow [cppreference.com](https://en.cppreference.com/w/c/string/byte).
 
 ## Note
-
+- [varidic_arg](https://en.cppreference.com/w/c/variadic)
 - 2d array formula = `rowIdx * numCol + colIdx`
 - `fread` **does not** return the read value, see [doc](https://en.cppreference.com/w/cpp/io/c/fread).
 - 1's complement, 2's complement
