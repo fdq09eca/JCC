@@ -1,6 +1,6 @@
 # HW
 
-- try to use [variadic arguments](https://en.cppreference.com/w/c/variadic) i.e. `...` to do `my_print` again?
+- try to use [variadic arguments](https://en.cppreference.com/w/c/variadic) i.e. `...` to do `my_printf` again?
 
 ![](ll.png)
 
