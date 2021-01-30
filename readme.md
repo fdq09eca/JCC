@@ -1,4 +1,6 @@
-## HW
+# HW
+
+- try to use [variadic arguments](https://en.cppreference.com/w/c/variadic) i.e. `...` to do `my_print` again?
 
 ![](ll.png)
 
@@ -26,35 +28,27 @@
   - selection_sort
 
 - black jack.
+  - number of Deck?
+  - number of Player (Max 8)? 3
+- text-ui prototype:
+  - Player1 $: inital $ -> 100
+  - Player2 $: inital $ -> 100
+  - Player3 $: inital $ -> 100
+  - $: 0
+  - Bet: 10
+  - Dealer: 9s
+  - Player: Qh, As
+    - win rate: `BJ? bet * 1.5 : bet;`
+  - Player: more card? \[Y/N\]
+  - Player: split [Y/N]
+  - Player: double bet [Y/N] 
 
-number of Deck?
-number of Player (Max 8)? 3
-
-Player1 $: inital $ -> 100
-Player2 $: inital $ -> 100
-Player3 $: inital $ -> 100
-
-$: 0
-Bet: 10
-
-Dealer: 9s
-Player: Qh, As
-
-`BJ? bet * 1.5 : bet;`
-
-Player: more card? \[Y/N\]
-
-<!-- Player: split [Y/N] -->
-<!-- Player: double bet [Y/N] -->
-<!-- Player:  -->
+---
 
 ## done ex [^cpp]
 
 - [x] [str_int_parser](./int_parser.c)
 - [x] [int_str_convert](./int_str_convert.c): [j_int_parser](./j_int_str_convert.c)
-
----
-
 - [x] [my_strcpy](./my_strcpy.c): [cppref](https://en.cppreference.com/w/c/string/byte/strcpy), [fdsb_strcpy](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strcpy.c)
 - [x] [my_strncpy](./my_strncpy.c): [cppref](https://en.cppreference.com/w/c/string/byte/strncpy), [fbsd_strncpy](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strncpy.c)
 - [x] [my_strlen](./my_strlen.c): [cppref](https://en.cppreference.com/w/c/string/byte/strlen), [fbsd_strlen](https://github.com/freebsd/freebsd-src/blob/master/lib/libc/string/strlen.c#L111)
@@ -95,7 +89,7 @@ Player: more card? \[Y/N\]
   - `printf("%d %d %d\n", i++, i++, i++);`
   - Mac: from left to right i.e. `2 1 0`
   - Window: from right to left, i.e. `0 1 2`
-- Corss platform matters
+- Cross platform matters
   - `size_t` is `unsiged int type`: allow the user to input their respective allowed memory amount.
     - `printf` when it is 32bit (4 byte): `%u`; 64bit (8 byte): `%ull`
     - see Jason's [YouTube ref](https://www.youtube.com/watch?v=JiUfvzd4eQM)
