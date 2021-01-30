@@ -37,9 +37,9 @@ make main && ./main
 
 [簡單黎講C Plus Plus](https://www.youtube.com/watch?v=cdTnj6rtEMI)
 
-## note
+## feedback
 
-1. Marco `debug_print`:
+1. Marco `debug_print`
 
 ```c
 #if _DEBUG
@@ -49,15 +49,17 @@ make main && ./main
 #endif
 ```
 
+2. double quote feature can't handle single double quote.
+
+### programming concepts
+
 2. debug time.
 3. `cell->data = strdup(buff)`
    1. one working buffer -> `strdup(buff)` for the result to reduce memory footprint.
-4. double quote feature can't handle single double quote.
-   1. "Samsung U600 24""asas" -> Samsung U600 24"
+   2. "Samsung U600 24""asas" -> Samsung U600 24"
 
-## note 2
-
-- dangling pointer
+- dangling pointer.
+  - `char *` is a pointer there is no guaranteed for its life-span. -> `strdup` the `char*` to make sure of it.
 - ownership concept
 - PAIRING
   - init -> release
