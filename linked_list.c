@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 //== Node ==
-typedef struct
+typedef struct Node
 {
     int v;
-    Node *next;
+    struct Node *next;
 } Node;
 
-void node_init(Node *node)
+Node *node_init(int v)
 {
-    node->v = 0;
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->v = v;
     node->next = NULL;
+    return node;
 }
 
 void node_release(Node *node)
@@ -21,47 +23,66 @@ void node_release(Node *node)
 }
 
 //== LinkedList ==
-
 typedef struct
 {
     int count;
     Node *head;
 } LinkedList;
 
-void lls_init(LinkedList *lli, Node *head)
+void lls_insert(LinkedList *lls, Node* node)
 {
-    lli->count = 0;
-    lli->head = head;
 }
 
-void lls_release(LinkedList *lli)
+LinkedList* lls_init(int v)
 {
-    lli->count = 0;
+    LinkedList* lls = (LinkedList*) malloc(sizeof(LinkedList));
+    lls->count = 0;
+    lls->head = node_init(v);
+    return lls;
+}
 
-    // Node **n = &lli->head;
-    // while (*n) {
-    //     n = (*n)->next;
-    //     node_release(*n);
-    // }
+void lls_release(LinkedList *lls)
+{
+    lls->count = 0;
 
-    Node *h = lli->head;
-    Node *t = NULL;
-    while (h)
+    Node *p = lls->head;
+    Node *next = NULL;
+    while (p) // free all node.
     {
-        t = h->next;
-        node_release(h);
-        h = t;
-        t = NULL;
+        next = p->next;
+        node_release(p);
+        p = next;
     }
-
-    // for (Node *h = lli->head, *t; h != NULL; h = t)
-    // {
-    //     t = h->next;
-    //     node_release(h);
-    // }
+    free(lls);
+    // return;
 }
+
+void lls_print(LinkedList *lls)
+{
+    for (Node *p = lls->head; p; p = p->next)
+    {
+        printf("[%i]->", p->v);
+    }
+    printf("|");
+}
+
+// void lls_insert(LinkedList *lls, Node *n)
+// {
+// }
+
+// Node *lls_pop_head(LinkedList *lls)
+// {
+//     Node *p_head = lls->head;
+//     lls->head = p_head->next return p_head;
+// }
+
 // ===============
 int main()
 {
+    
+    LinkedList* lls = lls_init(1);
+    lls_print(lls);
+    lls_release(lls);
+
     return 0;
 }
