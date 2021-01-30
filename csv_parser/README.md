@@ -83,13 +83,30 @@ my_printf("a=[%04d] s=[%10s]", a, s);
 a=[0010] s=[     Hello]
 ```
 
-- link list
-  - insert
-  - del(idx)
-  - reverse
-- double link list
+![](ll.png)
+
+- linked list
+  - insert(Node* n) (after)
+  - remove(Node* n)
+  - Node* pop_head()
+  - void reverse()
+  - Node* find(int v)
+  
+- doubly linked list
+  - insert(Node* n) (after)
+  - remove(Node* n)
+  - Node* pop_head(MyList)
+  - Node* pop_tail()
+  - void reverse()
+  - Node* find(int v)
+
 - dynamic array
-  - insert(idx)
+  - insert(idx, int)
+  - append(int)
+  - void remove_at(idx)
+  - int remove(int)
+  - idx find(int)
+  - selection_sort
 
 - black jack.
 
