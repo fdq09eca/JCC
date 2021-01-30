@@ -39,7 +39,9 @@ make main && ./main
 
 ## feedback
 
-1. Marco `debug_print`
+- [ ] double quote feature can't handle single double quote.
+
+Marco `debug_print`
 
 ```c
 #if _DEBUG
@@ -49,12 +51,11 @@ make main && ./main
 #endif
 ```
 
-2. double quote feature can't handle single double quote.
 
 ### programming concepts
 
-2. debug time.
-3. `cell->data = strdup(buff)`
+1. debug time.
+2. `cell->data = strdup(buff)`
    1. one working buffer -> `strdup(buff)` for the result to reduce memory footprint.
    2. "Samsung U600 24""asas" -> Samsung U600 24"
 
