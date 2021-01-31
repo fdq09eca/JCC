@@ -5,11 +5,14 @@
 ![](ll.png)
 
 - linked list
-  - insert(Node* n) (after)
+  - [x] insert(Node* n) (after): `inserta`
+  - [x] push head: `push`
+  - [x] push tail: `append`
   - remove(Node* n)
-  - Node* pop_head()
+  - [x] Node* pop_head: `lls_pop_head`
+  - [x] Node* pop_tail: `lls_pop_tail`
   - void reverse()
-  - Node* find(int v)
+  - [x] find(int v) `find`
   
 - doubly linked list
   - insert(Node* n) (after)
