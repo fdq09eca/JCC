@@ -261,18 +261,8 @@ void lls_reverse(LinkedList *lls)
     {
         lls_append_as_tail(lls, lls_pop_node(lls, p));
     }
-
-    // for (Node *t; t != h; )
-    // {
-    //     t = lls_pop_tail(lls);
-    //     lls_push(lls, t);
-    // lls_print(lls);
-    // }
 }
-// void lls_info(LinkedList *lls) {
 
-//     lls_print(lls);
-// }
 
 // ===============
 int main()
