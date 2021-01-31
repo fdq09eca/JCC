@@ -52,11 +52,14 @@ void lls_release(LinkedList *lls)
     free(lls);
 }
 
-Node *lls_lastnode(LinkedList *lls)
+Node *lls_tail(LinkedList *lls)
 {
     Node *p = lls->head;
-    while (p->next)
+    while (p)
     {
+        if (!p->next) {
+            return p;
+        }
         p = p->next;
     }
     return p;
@@ -72,12 +75,21 @@ void lls_push(LinkedList *lls, Node *node)
 
 void lls_append(LinkedList *lls, Node *node)
 {
-
-    lls_lastnode(lls)->next = node;
+    if (!lls->head) {
+        lls->head = node;
+    } else {
+        lls_tail(lls)->next = node;
+    }
     lls->len++;
 }
 
-Node *lls_find(LinkedList *lls, int v)
+void lls_append_as_tail(LinkedList *lls, Node *node)
+{
+    node->next = NULL;
+    lls_append(lls, node);
+}
+
+Node *lls_find_value(LinkedList *lls, int v)
 {
     Node *p = lls->head;
     while (p)
@@ -91,7 +103,7 @@ Node *lls_find(LinkedList *lls, int v)
     return p; // return NULL if not found
 }
 
-Node *lls_hasNode(LinkedList *lls, Node *t_node)
+Node *lls_find_node(LinkedList *lls, Node *t_node)
 {
 
     for (Node *p = lls->head; p; p = p->next)
@@ -101,12 +113,17 @@ Node *lls_hasNode(LinkedList *lls, Node *t_node)
             return p;
         }
     }
-    printf("t_node is not in the linkedlist");
+    printf("no such node in linkedlist.");
     return NULL;
 }
 
 Node *lls_find_previous(LinkedList *lls, Node *t_node)
 {
+    if (t_node == lls->head)
+    {
+        return NULL;
+    }
+
     for (Node *p = lls->head; p; p = p->next)
     {
         if (p->next == t_node)
@@ -119,9 +136,15 @@ Node *lls_find_previous(LinkedList *lls, Node *t_node)
 
 Node *lls_pop_head(LinkedList *lls)
 {
-    Node *p = lls->head;
-    lls->head = lls->head->next;
-    return p;
+    if (lls->head)
+    {
+        Node *p = lls->head;
+        lls->head = lls->head->next;
+        lls->len--;
+        return p;
+    }
+    puts("headless linkedlist.");
+    return NULL;
 }
 
 Node *lls_pop_tail(LinkedList *lls)
@@ -138,6 +161,7 @@ Node *lls_pop_tail(LinkedList *lls)
         {
             e = p->next;
             p->next = NULL;
+            lls->len--;
             return e;
         }
     }
@@ -163,7 +187,29 @@ Node *lls_pop_value(LinkedList *lls, int v)
             pv_n = p;
             n = p->next;
             pv_n->next = n->next;
+            lls->len--;
             return n; // 1st occurence
+        }
+    }
+    return NULL;
+}
+
+Node *lls_pop_node(LinkedList *lls, Node *node)
+{
+    // if !(lls_find_node(node) && lls) {
+    //     return NULL
+    // }
+    if (lls->head == node) {
+        return lls_pop_head(lls);
+    }
+    for (Node *p = lls->head, *n; p; p = p->next)
+    {
+        if (p->next == node)
+        {
+            n = p->next;
+            p->next = p->next->next;
+            lls->len--;
+            return n;
         }
     }
     return NULL;
@@ -171,26 +217,58 @@ Node *lls_pop_value(LinkedList *lls, int v)
 
 void lls_inserta(LinkedList *lls, Node *t_node, Node *i_node)
 {
-    if (!lls_hasNode(lls, t_node))
+    if (!lls_find_node(lls, t_node))
     {
         return;
     }
 
-    i_node->next = t_node->next ? t_node->next : NULL;
+    if (t_node->next && i_node->next)
+    {
+        puts("ERROR: t_node and i_node both are not independent.");
+        return;
+    }
+
+    i_node->next = t_node->next ? t_node->next : i_node->next;
     t_node->next = i_node;
     lls->len++;
 }
 
+void lls_remove(LinkedList *lls, Node *node)
+{
+    Node *rm = lls_pop_node(lls, node);
+    if (rm)
+    {
+        node_release(rm);
+    }
+}
+
 void lls_print(LinkedList *lls)
 {
-    printf("lls len: %zu\n", lls->len);
+    // printf("lls len: %zu\n", lls->len);
     for (Node *p = lls->head; p; p = p->next)
     {
         printf("[%i]->", p->v);
     }
-    printf("|\n");
+    printf("| <len: %zu>\n", lls->len);
 }
 
+void lls_reverse(LinkedList *lls)
+{
+    Node *t = lls_tail(lls);
+    Node *p;
+
+    while ((p = lls_find_previous(lls, t)))
+    {
+        lls_append_as_tail(lls, lls_pop_node(lls, p));
+    }
+
+    // for (Node *t; t != h; )
+    // {
+    //     t = lls_pop_tail(lls);
+    //     lls_push(lls, t);
+    // lls_print(lls);
+    // }
+}
 // void lls_info(LinkedList *lls) {
 
 //     lls_print(lls);
@@ -209,8 +287,8 @@ int main()
     Node *f2 = node_init(5);
     lls_inserta(lls, z, f);
     lls_print(lls);
-    printf("lls_find 2: %i\n", lls_find(lls, 2)->v);
-    printf("lls_find 8: %p\n", lls_find(lls, 8));
+    printf("lls_find_value 2: %i\n", lls_find_value(lls, 2)->v);
+    printf("lls_find_value 8: %p\n", lls_find_value(lls, 8));
     printf("lls_find_previous 5: %i\n", lls_find_previous(lls, f)->v);   // 0
     printf("lls_find_previous 5 (*): %p\n", lls_find_previous(lls, f2)); // 0x0
     lls_pop_head(lls);
@@ -220,11 +298,19 @@ int main()
     puts("pop tail:");
     lls_print(lls);
     lls_pop_value(lls, 5);
-    puts("pop value: ");
+    puts("pop value 5: ");
     lls_print(lls);
     lls_pop_value(lls, 1);
-    puts("pop value: ");
+    puts("pop value 1: ");
     lls_print(lls);
+    lls_append(lls, node_init(1));
+    lls_append(lls, node_init(2));
+    lls_append(lls, node_init(3));
+    lls_print(lls);
+    puts("reverse:");
+    lls_reverse(lls);
+    lls_print(lls);
+
     lls_release(lls);
 
     return 0;
