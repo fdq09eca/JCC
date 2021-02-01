@@ -8,10 +8,10 @@
   - [x] insert(Node* n) (after): `inserta`
   - [x] push head: `push`
   - [x] push tail: `append`
-  - remove(Node* n)
+  - [x] remove(Node* n)
   - [x] Node* pop_head: `lls_pop_head`
   - [x] Node* pop_tail: `lls_pop_tail`
-  - void reverse()
+  - [x] void reverse()
   - [x] find(int v) `find`
   
 - doubly linked list
