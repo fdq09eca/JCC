@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 //== Node ==
 typedef struct Node
 {
@@ -50,6 +51,7 @@ void lls_release(LinkedList *lls)
         p = next;
     }
     free(lls);
+    return;
 }
 
 Node *lls_tail(LinkedList *lls)
@@ -71,6 +73,7 @@ void lls_push(LinkedList *lls, Node *node)
     node->next = p;
     lls->head = node;
     lls->len++;
+    return;
 }
 
 void lls_append(LinkedList *lls, Node *node)
@@ -81,6 +84,7 @@ void lls_append(LinkedList *lls, Node *node)
         lls_tail(lls)->next = node;
     }
     lls->len++;
+    return;
 }
 
 void lls_append_as_tail(LinkedList *lls, Node *node)
@@ -231,6 +235,7 @@ void lls_inserta(LinkedList *lls, Node *t_node, Node *i_node)
     i_node->next = t_node->next ? t_node->next : i_node->next;
     t_node->next = i_node;
     lls->len++;
+    return;
 }
 
 void lls_remove(LinkedList *lls, Node *node)
@@ -240,6 +245,7 @@ void lls_remove(LinkedList *lls, Node *node)
     {
         node_release(rm);
     }
+    return;
 }
 
 void lls_print(LinkedList *lls)
@@ -250,17 +256,20 @@ void lls_print(LinkedList *lls)
         printf("[%i]->", p->v);
     }
     printf("| <len: %zu>\n", lls->len);
+    return;
 }
 
 void lls_reverse(LinkedList *lls)
 {
     Node *t = lls_tail(lls);
-    Node *p;
+    Node *pv_t;
 
-    while ((p = lls_find_previous(lls, t)))
+    while ((pv_t = lls_find_previous(lls, t)))
     {
-        lls_append_as_tail(lls, lls_pop_node(lls, p));
+        pv_t = lls_pop_node(lls, pv_t);
+        lls_append_as_tail(lls, pv_t);
     }
+    return;
 }
 
 
@@ -300,7 +309,6 @@ int main()
     puts("reverse:");
     lls_reverse(lls);
     lls_print(lls);
-
     lls_release(lls);
 
     return 0;
