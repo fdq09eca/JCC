@@ -1,24 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 //== Node ==
-typedef struct Node
+struct _Node;
+typedef struct _Node Node;
+struct _Node
 {
     int v;
-    struct Node *next;
-} Node;
+    Node *next;
+};
+// typedef struct Node
+// {
+//     int v;
+//     struct Node *next;
+// } Node;
 
-Node *node_init(int v)
+Node *node_init(int value)
 {
     Node *node = (Node *)malloc(sizeof(Node));
-    node->v = v;
+    if (!node)
+        return NULL;
+    // assert(node);
+    node->v = value;
     node->next = NULL;
     return node;
 }
 
 void node_release(Node *node)
 {
+    assert(node);
+    if (!node)
+        return;
     node->v = 0;
+    assert(node->next == NULL);
     node->next = NULL;
     free(node);
 }
@@ -47,6 +62,7 @@ void lls_release(LinkedList *lls)
     while (p)   // free all node.
     {
         next = p->next;
+        p->next = NULL;
         node_release(p);
         p = next;
     }
@@ -59,7 +75,8 @@ Node *lls_tail(LinkedList *lls)
     Node *p = lls->head;
     while (p)
     {
-        if (!p->next) {
+        if (!p->next)
+        {
             return p;
         }
         p = p->next;
@@ -78,9 +95,12 @@ void lls_push(LinkedList *lls, Node *node)
 
 void lls_append(LinkedList *lls, Node *node)
 {
-    if (!lls->head) {
+    if (!lls->head)
+    {
         lls->head = node;
-    } else {
+    }
+    else
+    {
         lls_tail(lls)->next = node;
     }
     lls->len++;
@@ -203,7 +223,8 @@ Node *lls_pop_node(LinkedList *lls, Node *node)
     // if !(lls_find_node(node) && lls) {
     //     return NULL
     // }
-    if (lls->head == node) {
+    if (lls->head == node)
+    {
         return lls_pop_head(lls);
     }
     for (Node *p = lls->head, *n; p; p = p->next)
@@ -260,6 +281,7 @@ void lls_print(LinkedList *lls)
 }
 
 void lls_reverse(LinkedList *lls)
+
 {
     Node *t = lls_tail(lls);
     Node *pv_t;
@@ -271,7 +293,6 @@ void lls_reverse(LinkedList *lls)
     }
     return;
 }
-
 
 // ===============
 int main()
@@ -313,3 +334,8 @@ int main()
 
     return 0;
 }
+
+// a = [0]->[1]
+// b = [2]->[3] << tail
+// a append to b
+// [2] -> [3] -> [0] -> [1]
