@@ -6,6 +6,7 @@
         printf("[%s] Line %3d: %s\n", ((EXPR) ? " OK " : "FAIL"), __LINE__, #EXPR); \
     } while(0) \
 //-------------------
+
 size_t n_malloc = 0;
 
 void* my_malloc(size_t n){
@@ -131,10 +132,7 @@ Node *lls_find_node_by_value(LinkedList *lls, int v)
     Node *p = lls->head;
     while (p)
     {
-        if (p->v == v)
-        {
-            return p; // return the 1st occurence.
-        }
+        if (p->v == v) return p; // return the 1st occurence.
         p = p->next;
     }
     return NULL;
