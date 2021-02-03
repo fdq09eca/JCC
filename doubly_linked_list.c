@@ -38,6 +38,7 @@ typedef struct
 
 // object ownership!!
 // aim: 90%
+// C++
 
 int main() {
     TEST(my_malloc == 0);
