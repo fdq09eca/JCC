@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string.h>
 #include <time.h>
+
 #define TEST(EXPR) \
     do { \
         printf("[%s] Line %3d: %s\n", ((EXPR) ? " OK " : "FAIL"), __LINE__, #EXPR); \
@@ -102,16 +103,18 @@ void ArrayList_reserve(ArrayList* als, size_t reserve_size) {
         return;
     }
     
-    {
-        int* src = als->data;
-        int* end = src + als->size;
-        int* dst = new_data;
+    // {   // memcpy
+    //     int* src = als->data;
+    //     int* end = src + als->size;
+    //     int* dst = new_data;
 
-        for (;src < end ;src++, dst++) {
-            *dst = *src;
-        } 
-    }
-    
+    //     for (;src < end ;src++, dst++) {
+    //         *dst = *src;
+    //     } 
+    // }
+    memcpy(new_data, als->data, sizeof(int)*als->size);
+
+
     my_free(als->data);
     als->data = new_data;
     als->cap = new_cap;
@@ -130,8 +133,19 @@ void ArrayList_insert(ArrayList* als, size_t idx, int v) {
     ArrayList_resize(als, als->size + 1);
     int* src = als->data + idx;
     size_t remain_elemnts = als->size - idx;
-    memmove(src+ 1, src, sizeof(int) * remain_elemnts); 
+    memmove(src+ 1, src, sizeof(int) * remain_elemnts);
     als->data[idx] = v;
+}
+
+void ArrayList_delete(ArrayList* als, size_t idx){
+    if (idx > als->size ) {
+        debug_print("ERROR: idx > size");
+        return;
+    }
+    int* src = als->data + idx;
+    size_t remain_elements = als->size - idx;
+    memmove(src, src+1, remain_elements);
+    ArrayList_resize(als, als->size - 1);  
 }
 
 void ArrayList_reverse(ArrayList* als) {
@@ -166,7 +180,7 @@ int* ArrayList_binary_search(ArrayList* als, int value){
     size_t m;
     while (start < end) {
         m = (start + end) / 2;
-        v = als->data[m];
+        size_t v = als->data[m];
         if (v > value) {
             end = m; 
             continue;
@@ -235,7 +249,7 @@ void ArrayList_print(ArrayList* als) {
     for (size_t i = 0; i < als->size; i ++) {
         printf("%i ", als->data[i]);
     }
-        printf("\n");
+    printf("\n");
 }
 
 
@@ -249,6 +263,7 @@ int main(){
         ArrayList_append(als, i);
     }
     ArrayList_print(als);
+
     ArrayList_selection_sort(als);
     ArrayList_print(als);
     
@@ -259,9 +274,12 @@ int main(){
         TEST(ArrayList_binary_search(als, i) == NULL);
     }
     
+    for (int i = 11; i >= 0; i--) {
+        ArrayList_delete(als,0);
+        TEST(als->size == i);
+    }
+    TEST(als->size == 0);
     ArrayList_release(als);
     TEST(g_malloc_count == 0);
-    
-
     return 0;
 }
