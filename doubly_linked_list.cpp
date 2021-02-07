@@ -36,11 +36,7 @@ typedef struct
     Node *tail;
 } LinkedList;
 
-// object ownership!!
-// aim: 90%
-// C++
 
 int main() {
-    TEST(my_malloc == 0);
     return 0;
 }
