@@ -227,38 +227,5 @@ int main()
     dll.pop_head();
     dll.print();
     dll.print();
-
-    // dll.append(2);
-    // dll.insert_after(p, 1);
-    // dll.print_r();
-    
-
-    // std::cout<<"== TEST FIND ==\n";
-    // for (int i = 1; i <= 10; i++)
-    // {
-    //     TEST(dll.find(i) != nullptr);
-    // }
-    
-    // for (int i = 0; i < 11; i++) {
-    //     dll.insert_after(dll.tail, i);
-    // }
-    // dll.print();
-    // dll.print_r();
-    
-    // std::cout<<"== TEST POP HEAD ==\n";
-    // dll.remove(dll.head);
-    // dll.print();
-    // dll.print_r();
-    // std::cout<<"== TEST POP TAIL ==\n";
-    // dll.remove(dll.tail);
-    // dll.print();
-    // dll.print_r();
-
-    // std::cout<<"== TEST clear ==\n";
-    // dll.clear();
-    // dll.print();
-    // dll.print_r();
-
-
     return 0;
 }
