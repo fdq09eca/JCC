@@ -8,4 +8,10 @@
 - [ ] matrix3x3
 - [ ] matrix4x4
 - [ ] shape
+- [ ] color
+- [ ] grayscale
+- [ ] file convertion?
+  - [ ] bmp
+  - [ ] png
+  - [ ] jpg
 
