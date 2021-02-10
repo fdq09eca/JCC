@@ -2,7 +2,7 @@
 
 - [x] doubly linked list
 - [ ] dynamic array
-- [ ] string
+- [x] string
 - [ ] vector3d
 - [ ] vector4d
 - [ ] matrix3x3
