@@ -15,6 +15,7 @@ public:
         z *= v.z;
         return *this;
     }
+    
 
     double dot(const Vector &v) const
     {

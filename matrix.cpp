@@ -10,15 +10,24 @@ private:
     double *_data;
 
 public:
-    Matrix() : _rows(0), _columns(0), _data(nullptr) {}
-    Matrix(size_t rows, size_t columns) : _rows(rows), _columns(columns)
+    Matrix(): _rows(0), _columns(0), _data(nullptr) {}
+    Matrix(size_t rows, size_t columns) : _rows(0), _columns(0), _data(nullptr)
     {
-        _data = new double[rows * columns];
+        resize(rows, columns);
     }
 
-    ~Matrix()
+    Matrix(const Matrix& m): _rows(0), _columns(0), _data(nullptr) { // copy constructor
+        *this = m;
+    }
+
+    void operator=(const Matrix& m) { // member-wise copy operator.
+        resize(m._rows, m._columns);
+        memcpy(_data, m._data, sizeof(double)*_rows*_columns);
+    }
+
+    ~Matrix() //<<
     {
-        delete[] _data;
+        delete[] _data; //<<
         _data = nullptr;
         _rows = 0;
         _columns = 0;
@@ -28,7 +37,10 @@ public:
 
     void resize(size_t new_rows, size_t new_columns){
         if (new_rows == _rows && new_columns == _columns) return;
-        double* new_data = new double[new_rows * new_columns]; // new double call constructor must give 0;
+        double* new_data = new double[new_rows * new_columns];
+        // new double call constructor must give 0;
+        // double a = double(); << 0  double constructor.
+        // new malloc + call construct
         
         size_t R = _rows < new_rows? _rows: new_rows;
         size_t C = _columns < new_columns? _columns: new_columns;
@@ -37,9 +49,7 @@ public:
             const double* src = &_data[r * _columns]; //<<
             const double* end = src + C;
             double* dst = &new_data[r * new_columns]; //<< 
-            for (; src < end; dst++, src++) {
-                *dst = *src;
-            }
+            for (; src < end; dst++, src++) { *dst = *src; }
         }
         delete[] _data;
         _data = new_data;
@@ -61,6 +71,10 @@ public:
         return e(r, c);
     }
 
+    // Matrix operator*(const Matrix& a) const {
+    //     // 
+    // }
+
     void print()
     {
         for (size_t r = 0; r < _rows; r++)
@@ -76,10 +90,14 @@ public:
 
 int main()
 {
-    Matrix m(3, 4);
-    m.e(0, 0) = 1;
-    m(0, 1) = 2;
-    m.resize(5, 5); // 1, 2
-
+    Matrix m(2, 2);
+    m(0, 1) = 1;
+    Matrix a;
+    a = m;
+    a(1, 1) = 1;
+    // m.e(0, 0) = 1; // <<[][]
+    // m(0, 1) = 2;
+    // m.resize(5, 5); // 1, 2
+    a.print();
     m.print();
 }

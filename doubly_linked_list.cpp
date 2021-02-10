@@ -52,9 +52,7 @@ public:
         return insert_after(nullptr, v_);
     }
 
-    Node* append(int v_) {
-        return insert_after(tail, v_);
-    }
+    Node* append(int v_) { return insert_after(tail, v_); }
 
     Node* find(int v_) {
         for (Node* p = head; p ; p=p->next) {
@@ -63,13 +61,9 @@ public:
         return nullptr;
     }
 
-    Node* pop_head() {
-        return remove(head);
-    }
+    Node* pop_head() { return remove(head); }
     
-    Node* pop_tail() {
-        return remove(tail);
-    }
+    Node* pop_tail() { return remove(tail); }
 
     Node* remove(Node* target_node){
         if (!target_node) {
@@ -77,13 +71,13 @@ public:
         }
         
         if (target_node->prev) {
-            target_node->prev->next = target_node->next;    
+            target_node->prev->next = target_node->next;     // <<
         } else {
             head = target_node->next;
         }
 
         if (target_node->next) {
-            target_node->next->prev = target_node->prev;
+            target_node->next->prev = target_node->prev; // <<
         } else {
             tail = target_node->prev;
         }
