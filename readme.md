@@ -11,7 +11,7 @@ my_printf("a={0}, f{1}", a, f);
 
 - [ ] dynamic array
   - [o] Intarray (dynamic array)
-  - [o] String
+  - [x] String
 - [/] String array
 - [ ] BlackJack
 - [x] vector3d
