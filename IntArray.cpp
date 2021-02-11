@@ -29,11 +29,35 @@ private:
     size_t _cap;
 
 public:
-    IntArray() : _size(0), _data(nullptr){};
-    IntArray(int *data_, size_t size) : _size(0), _data(nullptr)
+    IntArray() : _size(0), _data(nullptr), _cap(0){};
+    IntArray(int *data_, size_t size) : _size(0), _data(nullptr), _cap(0)
     {
         append(data_, size);
     };
+
+    IntArray(const IntArray &arr) : _size(0), _data(nullptr), _cap(0)
+    {
+        *this = arr;
+    }
+
+    void operator=(const IntArray &arr)
+    {
+        clear();
+        append(arr._data, arr._size);
+    }
+
+    ~IntArray()
+    {
+        clear();
+    }
+
+    void clear()
+    {
+        delete[] _data;
+        _data = nullptr;
+        _size = 0;
+        _cap = 0;
+    }
 
     const size_t &size() const { return _size; }
     const int *data() const { return _data; }
@@ -56,18 +80,22 @@ public:
         _size = new_size;
     }
 
-    void append(const int v)
+    IntArray &append(const int v)
     {
         resize(_size + 1);
         _data[_size] = v;
+        return *this;
     }
 
-    void append(const int *arr, size_t arr_size)
+    IntArray &append(const int *arr, size_t arr_size)
     {
+        if (!arr)
+            return;
         size_t old_size = _size;
         size_t new_size = arr_size + old_size;
         resize(new_size);
         memcpy(_data + old_size, arr, arr_size * sizeof(int));
+        return *this;
     }
 
     void del_idx(size_t idx)
@@ -222,10 +250,13 @@ int main()
     int arr[3] = {1, 2, 3};
 
     IntArray a(arr, 3);
+    dump_var(a);
     TEST(a.size() == 3);
 
-    int arr2[3] = {1, 2, 3};
-    a.append(arr2, 3);
+    IntArray arr2 = a;
+    dump_var(arr2);
+    a.append(arr2.data(), 3);
+
     dump_var(a);
     TEST(a[3] == 1);
     TEST(a.min() == 1);
