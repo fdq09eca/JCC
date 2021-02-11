@@ -83,7 +83,7 @@ public:
     IntArray &append(const int v)
     {
         resize(_size + 1);
-        _data[_size] = v;
+        _data[_size - 1] = v;
         return *this;
     }
 
@@ -147,6 +147,7 @@ public:
         int tmp = _data[idx_i];
         _data[idx_i] = _data[idx_j];
         _data[idx_j] = tmp;
+
     }
 
     size_t count(const int v, const size_t from_idx = 0) const
@@ -174,8 +175,10 @@ public:
     {
         size_t i = 0;
         size_t j = _size - 1;
-        for (size_t n = 0; n < j / 2; i++, j--)
+        for (size_t n = 0; n < _size / 2; i++, j--, n++)
         {
+            dump_var(i);
+            dump_var(j);
             swap_position(i, j);
         }
     }
@@ -194,18 +197,18 @@ public:
         return nullptr;
     }
 
-    int *binary_search(int v)
+    int *binary_search(int v) const
     {
         size_t start = 0;
         size_t end = _size;
         while (start < end)
         {
-            size_t middle = (start + end) / 2;
+            size_t middle = (start + end - 1) / 2;
             int m = _data[middle];
 
             if (v < m)
             {
-                end = middle - 1;
+                end = middle;
                 continue;
             }
             if (v > m)
@@ -226,6 +229,11 @@ public:
         }
         return _data[idx];
     }
+
+    bool operator==(IntArray &arr)
+    {
+        return memcmp(_data, arr._data, _size * sizeof(int)) == 0;
+    }
 };
 
 std::ostream &operator<<(std::ostream &s, IntArray &arr)
@@ -245,76 +253,44 @@ std::ostream &operator<<(std::ostream &s, IntArray &arr)
     return s;
 };
 
+void j_test()
+{
+    int arr[] = {1, 3, 5, 7, 9, 11};
+    IntArray a(arr, sizeof(arr) / sizeof(*arr));
+    dump_var(a);
+
+    for (size_t i = 0; i < 13; i++)
+    {
+        int *p = a.binary_search(i);
+        std::cout << "search " << i << " = " << (p ? "found " : "not found ");
+        if (p)
+            std::cout << *p;
+        std::cout << "\n";
+        if (i % 2)
+        {
+            TEST(p != nullptr);
+        }
+        else
+        {
+            TEST(p == nullptr);
+        }
+    }
+
+    a.append(-1);
+    dump_var(a);
+    TEST(a[6] == -1);
+
+    a.reverse();
+    dump_var(a);
+    {
+        int tmp[] = {-1, 11, 9, 7, 5, 3, 1};
+        IntArray t(tmp, sizeof(tmp) / sizeof(*tmp));
+        TEST(t == a);
+    }
+}
+
 int main()
 {
-    int arr[3] = {1, 2, 3};
-
-    IntArray a(arr, 3);
-    dump_var(a);
-    TEST(a.size() == 3);
-
-    IntArray arr2 = a;
-    dump_var(arr2);
-    a.append(arr2.data(), 3);
-
-    dump_var(a);
-    TEST(a[3] == 1);
-    TEST(a.min() == 1);
-    TEST(a.min(1) == 1);
-    TEST(a.min(2) == 1);
-    TEST(a.min(3) == 1);
-    TEST(a.min(4) == 2);
-    dump_var(a.min(4));
-    TEST(a.min(5) == 3);
-    dump_var(a.min(5));
-    a.swap_position(0, 1);
-    TEST(a[0] == 2);
-    TEST(a[1] == 1);
-    a.swap_position(0, 1);
-    TEST(a[0] == 1);
-    TEST(a[1] == 2);
-    TEST(a.find(0) == nullptr);
-    TEST(a.find(1) == a.data());
-    TEST(a.find(2) == a.data() + 1);
-    TEST(a.find(3) == a.data() + 2);
-    TEST(a.count(1) == 2);
-    TEST(a.count(2) == 2);
-    TEST(a.count(3) == 2);
-    TEST(a.count(4) == 0);
-    TEST(a.count(5) == 0);
-    TEST(a.count(6) == 0);
-
-    a.sort();
-    TEST(a.binary_search(1) != nullptr);
-    TEST(a.binary_search(2) != nullptr);
-    TEST(a.binary_search(3) != nullptr);
-    TEST(a.binary_search(4) == nullptr);
-    TEST(a.binary_search(5) == nullptr);
-    TEST(a.binary_search(6) == nullptr);
-    dump_var(a);
-    std::cout << "reverse\n";
-    a.reverse();
-    dump_var(a);
-    a.del(0);
-    dump_var(a);
-    a.del(1);
-    dump_var(a);
-    a.del(2);
-    dump_var(a);
-    a.del(3);
-    dump_var(a);
-    std::cout << "reverse\n";
-    a.reverse();
-    dump_var(a);
-
-    a.del(1);
-    a.del(2);
-    a.del(3);
-    dump_var(a);
-    a.del(1);
-    a.del(2);
-    a.del(3);
-    dump_var(a.size());
-
+    j_test();
     return 0;
 }
