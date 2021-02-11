@@ -10,7 +10,7 @@ my_printf("a={0}, f{1}", a, f);
 ```
 
 - [ ] dynamic array
-  - [o] Intarray (dynamic array)
+  - [x] Intarray (dynamic array)
   - [x] String
 - [/] String array
 - [ ] BlackJack
@@ -28,6 +28,6 @@ my_printf("a={0}, f{1}", a, f);
 
 ## Video
 
-- [ ] C to C++ 7 
-- [ ] C to C++ 8 
-- [ ] C to C++ 9 
+- [ ] C to C++ 7
+- [ ] C to C++ 8
+- [ ] C to C++ 9
