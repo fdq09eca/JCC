@@ -90,7 +90,7 @@ public:
     IntArray &append(const int *arr, size_t arr_size)
     {
         if (!arr)
-            return;
+            return *this;
         size_t old_size = _size;
         size_t new_size = arr_size + old_size;
         resize(new_size);
