@@ -139,7 +139,7 @@ int main()
     TEST(s == "HELLO!");
     s = "";
     TEST(s == "");
-    String a;
+    String a; 
     TEST(a == "");
     s.append("OK");
     TEST(s == "OK");
