@@ -204,6 +204,7 @@ public:
         while (start < end)
         {
             size_t middle = (start + end - 1) / 2;
+            std::cout <<"start: "<< start <<" middle: " << middle << " end: "<< end <<"\n";
             int m = _data[middle];
 
             if (v < m)
@@ -220,6 +221,33 @@ public:
         }
         return nullptr;
     }
+
+    //    int *binary_search(int v) const
+    // {
+    //     size_t start = 0;
+    //     size_t end = _size - 1;
+    //     while (start <= end)
+    //     {
+    //         size_t middle = (start + end) / 2;
+            
+    //         std::cout <<"start: "<< start <<" middle: " << middle << " end: "<< end <<"\n";
+            
+    //         int m = _data[middle];
+
+    //         if (v < m)
+    //         {
+    //             end = middle - 1;
+    //             continue;
+    //         }
+    //         if (v > m)
+    //         {
+    //             start = middle + 1;
+    //             continue;
+    //         }
+    //         return _data + middle;
+    //     }
+    //     return nullptr;
+    // }
 
     int &operator[](size_t idx)
     {
